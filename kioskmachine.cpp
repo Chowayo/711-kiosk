@@ -95,7 +95,7 @@ public:
         cout << "Total Amount: " << (this->amount - this->fee) << endl;
         cout << "Receipt Number: " << this->receipt_number << endl;
         cout << "Valid Until: " << date_time << endl;
-        }
+    }
 };
 
 class Service /// base class for all services
@@ -564,6 +564,97 @@ public:
             cout << "Invalid choice, please try again." << endl;
             break;
         }
+    }
+};
+class EPins
+{
+public:
+    string product;
+
+    EPins(string product, int mobile_number)
+    {
+        this->product = product;
+    }
+    void globe()
+    {
+        cout << "=====================================" << endl;
+        cout << "E-PINS" << endl;
+        cout << "=====================================" << endl;
+        cout << " GLOBE " << endl;
+        cout << " 1) FAMSURF 50 (Home prepaid WiFi. Up to 5GB valid for 3 days)" << endl;
+        cout << " 2)";
+    }
+    void garena()
+    {
+    }
+    void gameclub()
+    {
+    }
+    void cherry_credits()
+    {
+    }
+    void playpark()
+    {
+    }
+};
+
+class EMoney
+{
+public:
+    string service;
+    string mobileNumber;
+    string amount;
+
+    EMoney(string service, string mobileNumber, string amount)
+    {
+        this->service = service;
+        this->mobileNumber = mobileNumber;
+        this->amount = amount;
+    }
+    void grab()
+    {
+    }
+    void lazada()
+    {
+    }
+    void gcash()
+    {
+    }
+    void paymaya()
+    {
+    }
+    void beep()
+    {
+    }
+};
+
+class ParcelDropOff
+{
+public:
+    string service;
+    string receiver;
+    string amount;
+
+    ParcelDropOff(string service, string receiver, string amount)
+    {
+        this->service = service;
+        this->receiver = receiver;
+        this->amount = amount;
+    }
+    void canada()
+    {
+    }
+    void uae()
+    {
+    }
+    void usa()
+    {
+    }
+    void uk()
+    {
+    }
+    void japan()
+    {
     }
 };
 
