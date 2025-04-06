@@ -28,16 +28,16 @@ public:
     }
     virtual void display()
     {
-        cout << "=====================================\n"
-             << "RECEIPT\n"
-             << "=====================================\n"
-             << "Please bring the slip to the cashier for payment\n"
-             << "Service: " << this->service_type << '\n'
-             << "Amount: " << this->amount << '\n'
-             << "Convenience Fee: " << fee << '\n'
-             << "Total Amount: " << (this->amount - this->fee) << '\n'
-             << "Receipt Number: " << this->receipt_number << '\n'
-             << "Valid Until: " << date_time;
+        cout << "=====================================" << endl;
+        cout << "RECEIPT" << endl;
+        cout << "=====================================" << endl;
+        cout << "Please bring the slip to the cashier for payment" << endl;
+        cout << "Service: " << this->service_type << endl;
+        cout << "Amount: " << this->amount << endl;
+        cout << "Convenience Fee: " << fee << endl;
+        cout << "Total Amount: " << (this->amount - this->fee) << endl;
+        cout << "Receipt Number: " << this->receipt_number << endl;
+        cout << "Valid Until: " << date_time << endl;
     }
 };
 
@@ -56,9 +56,18 @@ public:
 
     void display() override
     {
-        Receipt::display();
+        cout << "=====================================" << endl;
+        cout << "RECEIPT" << endl;
+        cout << "=====================================" << endl;
+        cout << "Please bring the slip to the cashier for payment" << endl;
+        cout << "Service: " << this->service_type << endl;
         cout << "Account Number: " << this->account_number << endl;
         cout << "Account Name: " << this->account_name << endl;
+        cout << "Amount: " << this->amount << endl;
+        cout << "Convenience Fee: " << fee << endl;
+        cout << "Total Amount: " << (this->amount - this->fee) << endl;
+        cout << "Receipt Number: " << this->receipt_number << endl;
+        cout << "Valid Until: " << date_time << endl;
     }
 };
 
@@ -75,9 +84,18 @@ public:
 
     void display() override
     {
-        Receipt::display();
+        cout << "=====================================" << endl;
+        cout << "RECEIPT" << endl;
+        cout << "=====================================" << endl;
+        cout << "Please bring the slip to the cashier for payment" << endl;
+        cout << "Service: " << this->service_type << endl;
         cout << "Mobile Number: " << this->mobile_number << endl;
-    }
+        cout << "Amount: " << this->amount << endl;
+        cout << "Convenience Fee: " << fee << endl;
+        cout << "Total Amount: " << (this->amount - this->fee) << endl;
+        cout << "Receipt Number: " << this->receipt_number << endl;
+        cout << "Valid Until: " << date_time << endl;
+        }
 };
 
 class Service /// base class for all services
@@ -468,6 +486,87 @@ public:
     }
 };
 
+class Load : public Service
+{
+public:
+    int mobile_number;
+    double amount;
+
+    Load(int mobile_number, double amount)
+    {
+        this->mobile_number = mobile_number;
+        this->amount = amount;
+    }
+    void globe()
+    {
+        cout << "=====================================" << endl;
+        cout << "LOAD" << endl;
+        cout << "=====================================" << endl;
+        cout << "Please enter your information" << endl;
+        cout << "Mobile Number: ";
+        cin >> this->mobile_number;
+        cout << "Amount: ";
+        cin >> this->amount;
+
+        MobileReceipt receipt(this->mobile_number, "LOAD", this->amount, 0.00);
+        receipt.display();
+    }
+    void sun()
+    {
+        globe();
+    }
+    void smart()
+    {
+        globe();
+    }
+    void tnt()
+    {
+        globe();
+    }
+    void dito()
+    {
+        globe();
+    }
+    void run() override
+    {
+        int choice;
+        cout << "=====================================" << endl;
+        cout << "LOAD SERVICES" << endl;
+        cout << "=====================================" << endl;
+        cout << "1) Globe" << endl;
+        cout << "2) Smart" << endl;
+        cout << "3) TNT" << endl;
+        cout << "4) Sun" << endl;
+        cout << "5) DITO" << endl;
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        Load load(0, 0.00);
+
+        switch (choice)
+        {
+        case 1:
+            load.globe();
+            break;
+        case 2:
+            load.smart();
+            break;
+        case 3:
+            load.tnt();
+            break;
+        case 4:
+            load.sun();
+            break;
+        case 5:
+            load.dito();
+            break;
+        default:
+            cout << "Invalid choice, please try again." << endl;
+            break;
+        }
+    }
+};
+
 class Kiosk
 {
 public:
@@ -481,14 +580,14 @@ public:
     void displayMenu()
     {
         int choice;
-        cout << "\nPlease select a service:\n"
-             << "1. Rewards\n"
-             << "2. Bills Payment\n"
-             << "3. Load\n"
-             << "4. E-Pins\n"
-             << "5. E-Money\n"
-             << "6. Parcel Drop-Off\n"
-             << "Enter choice: ";
+        cout << "\nPlease select a service:" << endl;
+        cout << "1. Rewards" << endl;
+        cout << "2. Bills Payment" << endl;
+        cout << "3. Load" << endl;
+        cout << "4. E-Pins" << endl;
+        cout << "5. E-Money" << endl;
+        cout << "6. Parcel Drop-Off" << endl;
+        cout << "Enter choice: ";
         cin >> choice;
 
         switch (choice)
@@ -508,6 +607,8 @@ public:
         }
         case 3:
         {
+            Load load(0, 0.00);
+            load.run();
             break;
         }
         case 4:
