@@ -28,6 +28,7 @@ public:
     }
     virtual void display()
     {
+        system("cls");
         cout << "=====================================" << endl;
         cout << "RECEIPT" << endl;
         cout << "=====================================" << endl;
@@ -56,6 +57,7 @@ public:
 
     void display() override
     {
+        system("cls");
         cout << "=====================================" << endl;
         cout << "RECEIPT" << endl;
         cout << "=====================================" << endl;
@@ -84,6 +86,7 @@ public:
 
     void display() override
     {
+        system("cls");
         cout << "=====================================" << endl;
         cout << "RECEIPT" << endl;
         cout << "=====================================" << endl;
@@ -117,6 +120,7 @@ public:
     }
     void run() override
     {
+        system("cls");
         int choice;
         cout << "CLiQQ REWARDS MENU\n";
         cout << "1) Activate" << endl;
@@ -147,6 +151,7 @@ public:
     }
     void activate()
     {
+        system("cls");
         cout << "=====================================" << endl;
         cout << "CARD ACTIVATION" << endl;
         cout << "=====================================" << endl;
@@ -159,6 +164,7 @@ public:
     }
     void checkBalance()
     {
+        system("cls");
         cout << "=====================================" << endl;
         cout << "CHECK BALANCE" << endl;
         cout << "=====================================" << endl;
@@ -171,6 +177,7 @@ public:
     }
     void redeem()
     {
+        system("cls");
         int choices;
         cout << "=====================================" << endl;
         cout << "REWARDS LIST" << endl;
@@ -215,6 +222,7 @@ public:
     }
     void redeem_reward()
     {
+        system("cls");
         cout << "=====================================" << endl;
         cout << "REDEEM REWARD" << endl;
         cout << "=====================================" << endl;
@@ -229,6 +237,7 @@ public:
     }
     void printBarcode()
     {
+        system("cls");
         cout << "=====================================" << endl;
         cout << "PRINT BARCODE" << endl;
         cout << "=====================================" << endl;
@@ -256,6 +265,7 @@ public:
     }
     void billsDisplay()
     {
+        system("cls");
         int choices;
 
         cout << "=====================================" << endl;
@@ -290,6 +300,7 @@ public:
     }
     void billsPay()
     {
+        system("cls");
         cout << "Account Number: ";
         cin >> this->account_number;
         cout << "Subscriber Name(ex.LUZCANTOS): ";
@@ -305,6 +316,7 @@ public:
         : UtilityWater(account_number, account_name, amount) {}
     void billsDisplay()
     {
+        system("cls");
         int choices;
 
         cout << "=====================================" << endl;
@@ -434,6 +446,7 @@ class BillsPayment : public Service
 public:
     void run() override
     {
+        system("cls");
         int choice;
         UtilityWater water(0, "", 0.00);
         UtilityPower power(0, "", 0.00);
@@ -499,6 +512,7 @@ public:
     }
     void globe()
     {
+        system("cls");
         cout << "=====================================" << endl;
         cout << "LOAD" << endl;
         cout << "=====================================" << endl;
@@ -529,6 +543,7 @@ public:
     }
     void run() override
     {
+        system("cls");
         int choice;
         cout << "=====================================" << endl;
         cout << "LOAD SERVICES" << endl;
@@ -566,7 +581,7 @@ public:
         }
     }
 };
-class EPins
+class EPins : public Service
 {
 public:
     string product;
@@ -577,6 +592,7 @@ public:
     }
     void globe()
     {
+        system("cls");
         cout << "=====================================" << endl;
         cout << "E-PINS" << endl;
         cout << "=====================================" << endl;
@@ -596,65 +612,169 @@ public:
     void playpark()
     {
     }
+    void run() override
+    {
+        system("cls");
+        int choice;
+        cout << "=====================================" << endl;
+        cout << "E-PINS SERVICES" << endl;
+        cout << "=====================================" << endl;
+        cout << "1) Globe" << endl;
+        cout << "2) Garena" << endl;
+        cout << "3) Gameclub" << endl;
+        cout << "4) Cherry Credits" << endl;
+        cout << "5) Playpark" << endl;
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        EPins epins("", 0);
+
+        switch (choice)
+        {
+        case 1:
+            epins.globe();
+            break;
+        case 2:
+            epins.garena();
+            break;
+        case 3:
+            epins.gameclub();
+            break;
+        case 4:
+            epins.cherry_credits();
+            break;
+        case 5:
+            epins.playpark();
+            break;
+        default:
+            cout << "Invalid choice, please try again." << endl;
+            break;
+        }
+    }
 };
 
-class EMoney
+class EMoney : public Load
 {
 public:
-    string service;
-    string mobileNumber;
-    string amount;
-
-    EMoney(string service, string mobileNumber, string amount)
+    EMoney(int mobile_number, double amount) : Load(mobile_number, amount)
     {
-        this->service = service;
-        this->mobileNumber = mobileNumber;
+        this->mobile_number = mobile_number;
         this->amount = amount;
     }
     void grab()
     {
+        system("cls");
+        cout << "=====================================" << endl;
+        cout << "GRAB EMONEY" << endl;
+        cout << "=====================================" << endl;
+        cout << "Please enter your information" << endl;
+        cout << "Mobile Number: ";
+        cin >> this->mobile_number;
+        cout << "Amount: ";
+        cin >> this->amount;
+
+        MobileReceipt receipt(this->mobile_number, "GRAB EMONEY", this->amount, 0.00);
+        receipt.display();
     }
     void lazada()
     {
+        system("cls");
+        cout << "=====================================" << endl;
+        cout << "LAZADA EMONEY" << endl;
+        cout << "=====================================" << endl;
+        cout << "Please enter your information" << endl;
+        cout << "Mobile Number: ";
+        cin >> this->mobile_number;
+        cout << "Amount: ";
+        cin >> this->amount;
+
+        MobileReceipt receipt(this->mobile_number, "LAZADA EMONEY", this->amount, 0.00);
+        receipt.display();
     }
     void gcash()
     {
+        system("cls");
+        cout << "=====================================" << endl;
+        cout << "GCASH EMONEY" << endl;
+        cout << "=====================================" << endl;
+        cout << "Please enter your information" << endl;
+        cout << "Mobile Number: ";
+        cin >> this->mobile_number;
+        cout << "Amount: ";
+        cin >> this->amount;
+
+        MobileReceipt receipt(this->mobile_number, "GCASH EMONEY", this->amount, 0.00);
+        receipt.display();
     }
     void paymaya()
     {
+        system("cls");
+        cout << "=====================================" << endl;
+        cout << "PAYMAYA EMONEY" << endl;
+        cout << "=====================================" << endl;
+        cout << "Please enter your information" << endl;
+        cout << "Mobile Number: ";
+        cin >> this->mobile_number;
+        cout << "Amount: ";
+        cin >> this->amount;
+
+        MobileReceipt receipt(this->mobile_number, "PAYMAYA EMONEY", this->amount, 0.00);
+        receipt.display();
     }
     void beep()
     {
-    }
-};
+        system("cls");
+        cout << "=====================================" << endl;
+        cout << "BEEP EMONEY" << endl;
+        cout << "=====================================" << endl;
+        cout << "Please enter your information" << endl;
+        cout << "Mobile Number: ";
+        cin >> this->mobile_number;
+        cout << "Amount: ";
+        cin >> this->amount;
 
-class ParcelDropOff
-{
-public:
-    string service;
-    string receiver;
-    string amount;
+        MobileReceipt receipt(this->mobile_number, "BEEP EMONEY", this->amount, 0.00);
+        receipt.display();
+    }
 
-    ParcelDropOff(string service, string receiver, string amount)
+    void run() override
     {
-        this->service = service;
-        this->receiver = receiver;
-        this->amount = amount;
-    }
-    void canada()
-    {
-    }
-    void uae()
-    {
-    }
-    void usa()
-    {
-    }
-    void uk()
-    {
-    }
-    void japan()
-    {
+        system("cls");
+        int choice;
+        cout << "=====================================" << endl;
+        cout << "E-MONEY SERVICES" << endl;
+        cout << "=====================================" << endl;
+        cout << "1) Grab" << endl;
+        cout << "2) Lazada" << endl;
+        cout << "3) GCash" << endl;
+        cout << "4) Paymaya" << endl;
+        cout << "5) Beep" << endl;
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        EMoney emoney(0, 0.00);
+
+        switch (choice)
+        {
+        case 1:
+            emoney.grab();
+            break;
+        case 2:
+            emoney.lazada();
+            break;
+        case 3:
+            emoney.gcash();
+            break;
+        case 4:
+            emoney.paymaya();
+            break;
+        case 5:
+            emoney.beep();
+            break;
+        default:
+            cout << "Invalid choice, please try again." << endl;
+            break;
+        }
     }
 };
 
@@ -670,6 +790,7 @@ public:
 
     void displayMenu()
     {
+        system("cls");
         int choice;
         cout << "\nPlease select a service:" << endl;
         cout << "1. Rewards" << endl;
@@ -677,7 +798,6 @@ public:
         cout << "3. Load" << endl;
         cout << "4. E-Pins" << endl;
         cout << "5. E-Money" << endl;
-        cout << "6. Parcel Drop-Off" << endl;
         cout << "Enter choice: ";
         cin >> choice;
 
@@ -693,7 +813,6 @@ public:
         {
             BillsPayment bills;
             bills.run();
-
             break;
         }
         case 3:
@@ -703,14 +822,17 @@ public:
             break;
         }
         case 4:
-            cout << "E-Pins selected.\n";
+        {
+            EPins epins("", 0);
+            epins.run();
             break;
+        }
         case 5:
-            cout << "E-Money selected.\n";
+        {
+            EMoney emoney(0, 0.00);
+            emoney.run();
             break;
-        case 6:
-            cout << "Parcel Drop-Off selected.\n";
-            break;
+        }
         default:
             cout << "Invalid choice.\n";
         }
