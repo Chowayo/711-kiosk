@@ -39,6 +39,9 @@ public:
         cout << "Total Amount: " << (this->amount - this->fee) << endl;
         cout << "Receipt Number: " << this->receipt_number << endl;
         cout << "Valid Until: " << date_time << endl;
+
+        system("pause");
+        system("cls");
     }
 };
 
@@ -48,8 +51,8 @@ class AccountReceipt : public Receipt
     string account_name;
 
 public:
-    AccountReceipt(string type, double amount, double fee, int account_number, string account_name)
-        : Receipt(type, amount, fee)
+    AccountReceipt(string service_type, double amount, double fee, int account_number, string account_name)
+        : Receipt(service_type, amount, fee)
     {
         this->account_number = account_number;
         this->account_name = account_name;
@@ -70,6 +73,9 @@ public:
         cout << "Total Amount: " << (this->amount - this->fee) << endl;
         cout << "Receipt Number: " << this->receipt_number << endl;
         cout << "Valid Until: " << date_time << endl;
+
+        system("pause");
+        system("cls");
     }
 };
 
@@ -78,8 +84,8 @@ class MobileReceipt : public Receipt
     int mobile_number;
 
 public:
-    MobileReceipt(int mobile_number, string type, double amount, double fee)
-        : Receipt(type, amount, fee)
+    MobileReceipt(int mobile_number, string service_type, double amount, double fee)
+        : Receipt(service_type, amount, fee)
     {
         this->mobile_number = mobile_number;
     }
@@ -98,6 +104,8 @@ public:
         cout << "Total Amount: " << (this->amount - this->fee) << endl;
         cout << "Receipt Number: " << this->receipt_number << endl;
         cout << "Valid Until: " << date_time << endl;
+
+        system("pause");
     }
 };
 
@@ -120,34 +128,41 @@ public:
     }
     void run() override
     {
-        system("cls");
-        int choice;
-        cout << "CLiQQ REWARDS MENU\n";
-        cout << "1) Activate" << endl;
-        cout << "2) Check Balance" << endl;
-        cout << "3) Redeem" << endl;
-        cout << "4) Print Barcode" << endl;
-        cout << "Enter choice: ";
-        cin >> choice;
-
-        switch (choice)
+        int choices;
+        do
         {
-        case 1:
-            activate();
-            break;
-        case 2:
-            checkBalance();
-            break;
-        case 3:
-            redeem();
-            break;
-        case 4:
-            printBarcode();
-            break;
-        default:
-            cout << "Invalid choice.\n";
-            break;
-        }
+            system("cls");
+            cout << "CLiQQ REWARDS MENU\n";
+            cout << "1) Activate" << endl;
+            cout << "2) Check Balance" << endl;
+            cout << "3) Redeem" << endl;
+            cout << "4) Print Barcode" << endl;
+            cout << "0) Back" << endl;
+            cout << "Enter choice: ";
+            cin >> choices;
+
+            switch (choices)
+            {
+            case 1:
+                activate();
+                break;
+            case 2:
+                checkBalance();
+                break;
+            case 3:
+                redeem();
+                break;
+            case 4:
+                printBarcode();
+                break;
+            case 0:
+                system("cls");
+                return;
+            default:
+                cout << "Invalid choice.\n";
+                break;
+            }
+        } while (choices != 0);
     }
     void activate()
     {
@@ -179,43 +194,50 @@ public:
     {
         system("cls");
         int choices;
-        cout << "=====================================" << endl;
-        cout << "REWARDS LIST" << endl;
-        cout << "=====================================" << endl;
-        cout << "1) Crunch Time 1pc Fried Chicken - 178 points" << endl;
-        cout << "2) Crunch Time 2pc Fried Chicken - 350 points" << endl;
-        cout << "3) Hershey's Dark Chocolate 40g, 50% off - 31 points" << endl;
-        cout << "4) Kisses Classic Milk Choco 36g, 50% OFF - 35 points" << endl;
-        cout << "5) Hershey's Kisses Cookies N Creme 36g, 50% OFF - 35 points" << endl;
-        cout << "6) Siopao Spicy Asado - 90 points" << endl;
-
-        cout << "Please enter the number of the item you want to redeem: ";
-        cin >> choices;
-
-        switch (choices)
+        do
         {
-        case 1:
-            redeem_reward();
-            break;
-        case 2:
-            redeem_reward();
-            break;
-        case 3:
-            redeem_reward();
-            break;
-        case 4:
-            redeem_reward();
-            break;
-        case 5:
-            redeem_reward();
-            break;
-        case 6:
-            redeem_reward();
-            break;
-        default:
-            redeem_reward();
-            break;
-        }
+            cout << "=====================================" << endl;
+            cout << "REWARDS LIST" << endl;
+            cout << "=====================================" << endl;
+            cout << "1) Crunch Time 1pc Fried Chicken - 178 points" << endl;
+            cout << "2) Crunch Time 2pc Fried Chicken - 350 points" << endl;
+            cout << "3) Hershey's Dark Chocolate 40g, 50% off - 31 points" << endl;
+            cout << "4) Kisses Classic Milk Choco 36g, 50% OFF - 35 points" << endl;
+            cout << "5) Hershey's Kisses Cookies N Creme 36g, 50% OFF - 35 points" << endl;
+            cout << "6) Siopao Spicy Asado - 90 points" << endl;
+            cout << "0) Back" << endl;
+
+            cout << "Please enter the number of the item you want to redeem: ";
+            cin >> choices;
+
+            switch (choices)
+            {
+            case 1:
+                redeem_reward();
+                break;
+            case 2:
+                redeem_reward();
+                break;
+            case 3:
+                redeem_reward();
+                break;
+            case 4:
+                redeem_reward();
+                break;
+            case 5:
+                redeem_reward();
+                break;
+            case 6:
+                redeem_reward();
+                break;
+            case 0:
+                system("cls");
+                return;
+            default:
+                redeem_reward();
+                break;
+            }
+        } while (choices != 0);
 
         Receipt receipt("Redeem Reward", 0.00, 0.00);
         receipt.display();
@@ -252,13 +274,13 @@ public:
 class UtilityWater
 {
 public:
+    string service_type;
     int account_number;
     string account_name;
     double amount;
 
-    UtilityWater(int account_number, string account_name, double amount)
+    UtilityWater(string service_type, int account_number, string account_name, double amount)
     {
-
         this->account_number = account_number;
         this->account_name = account_name;
         this->amount = amount;
@@ -267,31 +289,36 @@ public:
     {
         system("cls");
         int choices;
-
         cout << "=====================================" << endl;
         cout << "WATER SERVICES" << endl;
         cout << "=====================================" << endl;
         cout << "1) Maynilad" << endl;
         cout << "2) Manila Water" << endl;
+        cout << "0) Back" << endl;
         cout << "Enter choice: ";
         cin >> choices;
-
-        billsPay();
 
         switch (choices)
         {
         case 1:
         {
-            AccountReceipt receipt("Maynilad", amount, 0.00, account_number, account_name);
+            this->service_type = "Maynilad";
+            billsPay();
+            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
             receipt.display();
             break;
         }
         case 2:
         {
-            AccountReceipt receipt("Manila Water", amount, 0.00, account_number, account_name);
+            this->service_type = "Manila Water";
+            billsPay();
+            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
             receipt.display();
             break;
         }
+        case 0:
+            system("cls");
+            return;
         default:
         {
             break;
@@ -301,6 +328,10 @@ public:
     void billsPay()
     {
         system("cls");
+        cout << "=====================================" << endl;
+        cout << this->service_type << endl;
+        cout << "=====================================" << endl;
+        cout << "Please enter your information" << endl;
         cout << "Account Number: ";
         cin >> this->account_number;
         cout << "Subscriber Name(ex.LUZCANTOS): ";
@@ -312,36 +343,43 @@ public:
 class UtilityPower : public UtilityWater
 {
 public:
-    UtilityPower(int account_number, string account_name, double amount)
-        : UtilityWater(account_number, account_name, amount) {}
+    UtilityPower(string service_type, int account_number, string account_name, double amount)
+        : UtilityWater(service_type, account_number, account_name, amount) {}
     void billsDisplay()
     {
         system("cls");
         int choices;
-
         cout << "=====================================" << endl;
         cout << "POWER SERVICES" << endl;
         cout << "=====================================" << endl;
         cout << "1) Meralco" << endl;
         cout << "2) IDK" << endl;
+        cout << "0) Back" << endl;
         cout << "Enter choice: ";
         cin >> choices;
-
-        billsPay();
 
         switch (choices)
         {
         case 1:
         {
-            AccountReceipt receipt("Meralco", this->amount, 0.00, this->account_number, this->account_name);
+            this->service_type = "Meralco";
+            billsPay();
+            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
             receipt.display();
             break;
         }
         case 2:
         {
-            AccountReceipt receipt("IDK", this->amount, 0.00, this->account_number, this->account_name);
+            this->service_type = "IDK";
+            billsPay();
+            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
             receipt.display();
             break;
+        }
+        case 0:
+        {
+            system("cls");
+            return;
         }
         default:
         {
@@ -354,91 +392,213 @@ public:
         UtilityWater::billsPay();
     }
 };
-class Telephone
+class Telephone : public UtilityWater
 {
 public:
-    string telephone_servies;
-
-    Telephone(string telephone_services)
+    Telephone(string service_type, int account_number, string account_name, double amount)
+        : UtilityWater(service_type, account_number, account_name, amount) {}
+    void billsDisplay()
     {
-        this->telephone_servies = telephone_servies;
+        system("cls");
+        int choices;
+        cout << "=====================================" << endl;
+        cout << "TELEPHONE SERVICES" << endl;
+        cout << "=====================================" << endl;
+        cout << "1) PLDT" << endl;
+        cout << "2) Globe" << endl;
+        cout << "0) Back" << endl;
+        cout << "Enter choice: ";
+        cin >> choices;
+
+        switch (choices)
+        {
+        case 1:
+        {
+            this->service_type = "PLDT";
+            billsPay();
+            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
+            receipt.display();
+            break;
+        }
+        case 2:
+        {
+            this->service_type = "Globe";
+            billsPay();
+            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
+            receipt.display();
+            break;
+        }
+        case 0:
+        {
+            system("cls");
+            return;
+        }
+        default:
+        {
+            break;
+        }
+        }
     }
     void pay()
     {
+        UtilityWater::billsPay();
     }
 };
-class CellularPhone
+class CellularPhone : public UtilityWater
 {
 public:
-    string cellular_servies;
+    CellularPhone(string service_type, int account_number, string account_name, double amount)
+        : UtilityWater(service_type, account_number, account_name, amount) {}
+    void billsDisplay()
+    {
+        system("cls");
+        int choices;
+        cout << "=====================================" << endl;
+        cout << "POWER SERVICES" << endl;
+        cout << "=====================================" << endl;
+        cout << "1) Globe" << endl;
+        cout << "2) Smart" << endl;
+        cout << "0) Back" << endl;
+        cout << "Enter choice: ";
+        cin >> choices;
 
-    CellularPhone(string cellular_servies)
-    {
-        this->cellular_servies = cellular_servies;
-    }
-    void globe()
-    {
-    }
-    void sun()
-    {
-    }
-    void pldt()
-    {
-    }
-    void smart()
-    {
+        switch (choices)
+        {
+        case 1:
+        {
+            this->service_type = "Globe";
+            billsPay();
+            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
+            receipt.display();
+            break;
+        }
+        case 2:
+        {
+            this->service_type = "Smart";
+            billsPay();
+            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
+            receipt.display();
+            break;
+        }
+        case 0:
+        {
+            system("cls");
+            return;
+        }
+        default:
+        {
+            break;
+        }
+        }
     }
     void pay()
     {
+        UtilityWater::billsPay();
     }
 };
-class CableTV
+class CableTV : public UtilityWater
 {
 public:
-    string cable_servies;
-
-    CableTV(string cable_services)
+    CableTV(string service_type, int account_number, string account_name, double amount)
+        : UtilityWater(service_type, account_number, account_name, amount) {}
+    void billsDisplay()
     {
-        this->cable_servies = cable_servies;
+        system("cls");
+        int choices;
+        cout << "=====================================" << endl;
+        cout << "CABLE TV SERVICES" << endl;
+        cout << "=====================================" << endl;
+        cout << "1) Sky Cable" << endl;
+        cout << "2) Cignal" << endl;
+        cout << "0) Back" << endl;
+        cout << "Enter choice: ";
+        cin >> choices;
+
+        switch (choices)
+        {
+        case 1:
+        {
+            this->service_type = "Sky Cable";
+            billsPay();
+            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
+            receipt.display();
+            break;
+        }
+        case 2:
+        {
+            this->service_type = "Cignal";
+            billsPay();
+            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
+            receipt.display();
+            break;
+        }
+        case 0:
+        {
+            system("cls");
+            return;
+        }
+        default:
+        {
+            break;
+        }
+        }
     }
     void pay()
     {
+        UtilityWater::billsPay();
     }
 };
-class Airlines
+
+class Internet : public UtilityWater
 {
 public:
-    string airlines_servies;
-
-    Airlines(string airline_services)
+    Internet(string service_type, int account_number, string account_name, double amount)
+        : UtilityWater(service_type, account_number, account_name, amount) {}
+    void billsDisplay()
     {
-        this->airlines_servies = airlines_servies;
+        system("cls");
+        int choices;
+        cout << "=====================================" << endl;
+        cout << "INTERNET SERVICES" << endl;
+        cout << "=====================================" << endl;
+        cout << "1) PLDT" << endl;
+        cout << "2) Converge" << endl;
+        cout << "0) Back" << endl;
+        cout << "Enter choice: ";
+        cin >> choices;
+
+        switch (choices)
+        {
+        case 1:
+        {
+            this->service_type = "PLDT";
+            billsPay();
+            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
+            receipt.display();
+            break;
+        }
+        case 2:
+        {
+            this->service_type = "Converge";
+            billsPay();
+            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
+            receipt.display();
+            break;
+        }
+        case 0:
+        {
+            system("cls");
+            return;
+        }
+        default:
+        {
+            break;
+        }
+        }
     }
     void pay()
     {
-    }
-};
-class Loans
-{
-public:
-    string loans_servies;
-
-    Loans(string loans_services)
-    {
-        this->loans_servies = loans_servies;
-    }
-};
-class Internet
-{
-public:
-    string internet_servies;
-
-    Internet(string internet_services)
-    {
-        this->internet_servies = internet_servies;
-    }
-    void pay()
-    {
+        UtilityWater::billsPay();
     }
 };
 class BillsPayment : public Service
@@ -447,14 +607,13 @@ public:
     void run() override
     {
         system("cls");
-        int choice;
-        UtilityWater water(0, "", 0.00);
-        UtilityPower power(0, "", 0.00);
-        Telephone telephone("");
-        CellularPhone phone("");
-        CableTV cable("");
-        Airlines airlines("");
-        Internet internet("");
+        int choices;
+        UtilityWater water("", 0, "", 0.00);
+        UtilityPower power("", 0, "", 0.00);
+        Telephone telephone("", 0, "", 0.00);
+        CellularPhone phone("", 0, "", 0.00);
+        CableTV cable("", 0, "", 0.00);
+        Internet internet("", 0, "", 0.00);
 
         cout << "=====================================" << endl;
         cout << "Bills Services" << endl;
@@ -464,34 +623,48 @@ public:
         cout << "3)Telephone Services" << endl;
         cout << "4)Cellular Phone" << endl;
         cout << "5)Cable TV" << endl;
-        cout << "6)Airlines" << endl;
-        cout << "7)Internet" << endl;
+        cout << "6)Internet" << endl;
+        cout << "0) Back" << endl;
         cout << "Enter choice: ";
-        cin >> choice;
+        cin >> choices;
 
-        switch (choice)
+        switch (choices)
         {
         case 1:
+        {
             water.billsDisplay();
             break;
+        }
         case 2:
+        {
             power.billsDisplay();
             break;
+        }
         case 3:
-            telephone.pay();
+        {
+            telephone.billsDisplay();
             break;
+        }
         case 4:
-            phone.pay();
+        {
+            phone.billsDisplay();
             break;
+        }
         case 5:
-            cable.pay();
+        {
+            cable.billsDisplay();
             break;
+        }
         case 6:
-            airlines.pay();
+        {
+            internet.billsDisplay();
             break;
-        case 7:
-            internet.pay();
-            break;
+        }
+        case 0:
+        {
+            system("cls");
+            return;
+        }
         default:
 
             break;
@@ -512,6 +685,41 @@ public:
     }
     void globe()
     {
+        pay();
+
+        MobileReceipt receipt(this->mobile_number, "GLOBE LOAD", 0.00, 0.00);
+        receipt.display();
+    }
+    void sun()
+    {
+        pay();
+
+        MobileReceipt receipt(this->mobile_number, "SUN LOAD", 0.00, 0.00);
+        receipt.display();
+    }
+    void smart()
+    {
+        pay();
+
+        MobileReceipt receipt(this->mobile_number, "SMART LOAD", 0.00, 0.00);
+        receipt.display();
+    }
+    void tnt()
+    {
+        pay();
+
+        MobileReceipt receipt(this->mobile_number, "TNT LOAD", 0.00, 0.00);
+        receipt.display();
+    }
+    void dito()
+    {
+        pay();
+
+        MobileReceipt receipt(this->mobile_number, "DITO LOAD", 0.00, 0.00);
+        receipt.display();
+    }
+    void pay()
+    {
         system("cls");
         cout << "=====================================" << endl;
         cout << "LOAD" << endl;
@@ -521,25 +729,6 @@ public:
         cin >> this->mobile_number;
         cout << "Amount: ";
         cin >> this->amount;
-
-        MobileReceipt receipt(this->mobile_number, "LOAD", this->amount, 0.00);
-        receipt.display();
-    }
-    void sun()
-    {
-        globe();
-    }
-    void smart()
-    {
-        globe();
-    }
-    void tnt()
-    {
-        globe();
-    }
-    void dito()
-    {
-        globe();
     }
     void run() override
     {
@@ -553,6 +742,7 @@ public:
         cout << "3) TNT" << endl;
         cout << "4) Sun" << endl;
         cout << "5) DITO" << endl;
+        cout << "0) Back" << endl;
         cout << "Enter choice: ";
         cin >> choice;
 
@@ -575,6 +765,9 @@ public:
         case 5:
             load.dito();
             break;
+        case 0:
+            system("cls");
+            return;
         default:
             cout << "Invalid choice, please try again." << endl;
             break;
@@ -584,70 +777,438 @@ public:
 class EPins : public Service
 {
 public:
-    string product;
+    int mobile_number;
+    double amount;
 
-    EPins(string product, int mobile_number)
+    EPins(int mobile_number, double amount)
     {
-        this->product = product;
+        this->mobile_number = mobile_number;
+        this->amount = amount;
     }
+
     void globe()
     {
+        int choices;
         system("cls");
         cout << "=====================================" << endl;
         cout << "E-PINS" << endl;
         cout << "=====================================" << endl;
         cout << " GLOBE " << endl;
-        cout << " 1) FAMSURF 50 (Home prepaid WiFi. Up to 5GB valid for 3 days)" << endl;
-        cout << " 2)";
+        cout << "1) FAMSURF 50 (Home prepaid WiFi. Up to 5GB valid for 3 days) - PHP 50" << endl;
+        cout << "2) GOSURF 99 (1GB data valid for 7 days) - PHP 99" << endl;
+        cout << "3) GOSURF 299 (3GB data valid for 30 days) - PHP 299" << endl;
+        cout << "4) GOSURF 599 (5GB data valid for 30 days) - PHP 599" << endl;
+        cout << "5) GOSURF 999 (10GB data valid for 30 days) - PHP 999" << endl;
+        cout << "0) Back" << endl;
+        cout << "Enter choice: ";
+        cin >> choices;
+
+        switch (choices)
+        {
+        case 1:
+        {
+            pay();
+
+            MobileReceipt famsurf50(this->mobile_number, "FAMSURF 50", 50, 0.00);
+            famsurf50.display();
+
+            break;
+        }
+        case 2:
+        {
+            pay();
+
+            MobileReceipt gosurf99(this->mobile_number, "GOSURF 99", 99, 0.00);
+            gosurf99.display();
+            break;
+        }
+        case 3:
+        {
+            pay();
+
+            MobileReceipt gosurf299(this->mobile_number, "GOSURF 299", 299, 0.00);
+            gosurf299.display();
+            break;
+        }
+        case 4:
+        {
+            pay();
+
+            MobileReceipt gosurf599(this->mobile_number, "GOSURF 599", 599, 0.00);
+            gosurf599.display();
+            break;
+        }
+        case 5:
+        {
+            pay();
+
+            MobileReceipt gosurf999(this->mobile_number, "GOSURF 999", 999, 0.00);
+            gosurf999.display();
+            break;
+        }
+        case 0:
+        {
+            system("cls");
+            return;
+        }
+        default:
+        {
+            cout << "Invalid choice. Please try again." << endl;
+            system("pause");
+            globe();
+            return;
+        };
+        }
     }
+    void smart()
+    {
+        int choices;
+        system("cls");
+        cout << "=====================================" << endl;
+        cout << "E-PINS" << endl;
+        cout << "=====================================" << endl;
+        cout << " GLOBE " << endl;
+        cout << "1) GIGA50	(2GB Data + 1GB YouTube 3 days) - PHP 50" << endl;
+        cout << "2) ALLNET50 (Unlimited all-net texts + 50 mins calls + 500MB data 3 days) - PHP 50" << endl;
+        cout << "3) GIGA99	(2GB/day on select apps 7 days)	- PHP 99" << endl;
+        cout << "4) GIGA299	(2GB/day on select apps 30 days) - PHP 299" << endl;
+        cout << "5) GIGA499	(4GB/day 30 days) - PHP 499" << endl;
+        cout << "0) Back" << endl;
+        cout << "Enter choice: ";
+        cin >> choices;
+
+        switch (choices)
+        {
+        case 1:
+        {
+            pay();
+
+            MobileReceipt giga50(this->mobile_number, "GIGA 50", 50, 0.00);
+            giga50.display();
+
+            break;
+        }
+        case 2:
+        {
+            pay();
+
+            MobileReceipt allnet50(this->mobile_number, "ALL NET 50", 99, 0.00);
+            allnet50.display();
+            break;
+        }
+        case 3:
+        {
+            pay();
+
+            MobileReceipt giga99(this->mobile_number, "GIGA 99", 299, 0.00);
+            giga99.display();
+            break;
+        }
+        case 4:
+        {
+            pay();
+
+            MobileReceipt giga299(this->mobile_number, "GIGA 299", 599, 0.00);
+            giga299.display();
+            break;
+        }
+        case 5:
+        {
+            pay();
+
+            MobileReceipt giga499(this->mobile_number, "GIGA 499", 999, 0.00);
+            giga499.display();
+            break;
+        }
+        case 0:
+        {
+            system("cls");
+            return;
+        }
+        default:
+        {
+            cout << "Invalid choice. Please try again." << endl;
+            system("pause");
+            globe();
+            return;
+        };
+        }
+    }
+
     void garena()
     {
+        int choices;
+        system("cls");
+        cout << "=====================================" << endl;
+        cout << "E-PINS" << endl;
+        cout << "=====================================" << endl;
+        cout << " GARENA " << endl;
+        cout << "1) GARENA 50 (Pin will be sent via SMS) - PHP 50" << endl;
+        cout << "2) GARENA 100 (Pin will be sent via SMS) - PHP 100" << endl;
+        cout << "3) GARENA 200 (Pin will be sent via SMS) - PHP 200" << endl;
+        cout << "4) GARENA 300 (Pin will be sent via SMS) - PHP 300" << endl;
+        cout << "5) GARENA 500 (Pin will be sent via SMS) - PHP 500" << endl;
+        cout << "0) Back" << endl;
+        cout << "Enter choice: ";
+        cin >> choices;
+
+        switch (choices)
+        {
+        case 1:
+        {
+            pay();
+
+            MobileReceipt garena50(this->mobile_number, "Garena 50", 50, 0.00);
+            garena50.display();
+
+            break;
+        }
+        case 2:
+        {
+            pay();
+
+            MobileReceipt garena100(this->mobile_number, "Garena 100", 100, 0.00);
+            garena100.display();
+            break;
+        }
+        case 3:
+        {
+            pay();
+
+            MobileReceipt garena200(this->mobile_number, "Garena 200", 299, 0.00);
+            garena200.display();
+            break;
+        }
+        case 4:
+        {
+            pay();
+
+            MobileReceipt garena300(this->mobile_number, "Garena 300", 599, 0.00);
+            garena300.display();
+            break;
+        }
+        case 5:
+        {
+            pay();
+
+            MobileReceipt garena500(this->mobile_number, "Garena 500", 999, 0.00);
+            garena500.display();
+            break;
+        }
+        case 0:
+        {
+            system("cls");
+            return;
+        }
+        default:
+        {
+            cout << "Invalid choice. Please try again." << endl;
+            system("pause");
+            globe();
+            return;
+        };
+        }
     }
     void gameclub()
     {
+        int choices;
+        system("cls");
+        cout << "=====================================" << endl;
+        cout << "E-PINS" << endl;
+        cout << "=====================================" << endl;
+        cout << " Gameclub " << endl;
+        cout << "1) GAMECLUB 50 (Pin will be sent via SMS) - PHP 50" << endl;
+        cout << "2) GAMECLUB 100 (Pin will be sent via SMS) - PHP 100" << endl;
+        cout << "3) GAMECLUB 200 (Pin will be sent via SMS) - PHP 200" << endl;
+        cout << "4) GAMECLUB 300 (Pin will be sent via SMS) - PHP 300" << endl;
+        cout << "5) GAMECLUB 500 (Pin will be sent via SMS) - PHP 500" << endl;
+        cout << "0) Back" << endl;
+        cout << "Enter choice: ";
+        cin >> choices;
+
+        switch (choices)
+        {
+        case 1:
+        {
+            pay();
+
+            MobileReceipt gc50(this->mobile_number, "Gameclub 50", 50, 0.00);
+            gc50.display();
+
+            break;
+        }
+        case 2:
+        {
+            pay();
+
+            MobileReceipt gc100(this->mobile_number, "Gameclub 100", 100, 0.00);
+            gc100.display();
+            break;
+        }
+        case 3:
+        {
+            pay();
+
+            MobileReceipt gc200(this->mobile_number, "Gameclub 200", 200, 0.00);
+            gc200.display();
+            break;
+        }
+        case 4:
+        {
+            pay();
+
+            MobileReceipt gc300(this->mobile_number, "Gameclub 300", 300, 0.00);
+            gc300.display();
+            break;
+        }
+        case 5:
+        {
+            pay();
+
+            MobileReceipt gc500(this->mobile_number, "Gameclub 500", 500, 0.00);
+            gc500.display();
+            break;
+        }
+        case 0:
+        {
+            system("cls");
+            return;
+        }
+        default:
+        {
+            cout << "Invalid choice. Please try again." << endl;
+            system("pause");
+            globe();
+            return;
+        };
+        }
     }
-    void cherry_credits()
+    void steam()
     {
+        int choices;
+        system("cls");
+        cout << "=====================================" << endl;
+        cout << "E-PINS" << endl;
+        cout << "=====================================" << endl;
+        cout << " STEAM " << endl;
+        cout << "1) STEAM 60 (50 worth of Steam Credits) - PHP 60" << endl;
+        cout << "2) STEAM 120 (100 worth of Steam Credits) - PHP 120" << endl;
+        cout << "3) STEAM 299 (250 worth of Steam Credits) - PHP 299" << endl;
+        cout << "4) STEAM 599 (500 worth of Steam Credits) - PHP 599" << endl;
+        cout << "5) STEAM 960 (800 worth of Steam Credits) - PHP 960" << endl;
+        cout << "0) Back" << endl;
+        cout << "Enter choice: ";
+        cin >> choices;
+
+        switch (choices)
+        {
+        case 1:
+        {
+            pay();
+
+            MobileReceipt steam60(this->mobile_number, "STEAM 60", 60, 0.00);
+            steam60.display();
+
+            break;
+        }
+        case 2:
+        {
+            pay();
+
+            MobileReceipt steam120(this->mobile_number, "STEAM 120", 120, 0.00);
+            steam120.display();
+            break;
+        }
+        case 3:
+        {
+            pay();
+
+            MobileReceipt steam299(this->mobile_number, "STEAM 299", 299, 0.00);
+            steam299.display();
+            break;
+        }
+        case 4:
+        {
+            pay();
+
+            MobileReceipt steam599(this->mobile_number, "STEAM 599", 599, 0.00);
+            steam599.display();
+            break;
+        }
+        case 5:
+        {
+            pay();
+
+            MobileReceipt steam960(this->mobile_number, "STEAM 960", 960, 0.00);
+            steam960.display();
+            break;
+        }
+        case 0:
+        {
+            system("cls");
+            return;
+        }
+        default:
+        {
+            cout << "Invalid choice. Please try again." << endl;
+            system("pause");
+            globe();
+            return;
+        };
+        }
     }
-    void playpark()
-    {
-    }
-    void run() override
+    void pay()
     {
         system("cls");
-        int choice;
+        cout << "=====================================" << endl;
+        cout << "EPINS" << endl;
+        cout << "=====================================" << endl;
+        cout << "Please enter your information" << endl;
+        cout << "Mobile Number: ";
+        cin >> this->mobile_number;
+    }
+
+    void run() override
+    {
+        int choices;
+        system("cls");
         cout << "=====================================" << endl;
         cout << "E-PINS SERVICES" << endl;
         cout << "=====================================" << endl;
         cout << "1) Globe" << endl;
-        cout << "2) Garena" << endl;
-        cout << "3) Gameclub" << endl;
-        cout << "4) Cherry Credits" << endl;
-        cout << "5) Playpark" << endl;
+        cout << "2) Smart" << endl;
+        cout << "3) Garena" << endl;
+        cout << "4) Gameclub" << endl;
+        cout << "5) Steam" << endl;
+        cout << "0) Back" << endl;
         cout << "Enter choice: ";
-        cin >> choice;
+        cin >> choices;
 
-        EPins epins("", 0);
+        EPins epins(0, 0.00);
 
-        switch (choice)
+        switch (choices)
         {
         case 1:
             epins.globe();
             break;
         case 2:
-            epins.garena();
+            epins.smart();
             break;
         case 3:
-            epins.gameclub();
+            epins.garena();
             break;
         case 4:
-            epins.cherry_credits();
+            epins.gameclub();
             break;
         case 5:
-            epins.playpark();
+            epins.steam();
             break;
+        case 0:
+            system("cls");
+            return;
         default:
             cout << "Invalid choice, please try again." << endl;
+            system("pause");
             break;
         }
     }
@@ -740,7 +1301,7 @@ public:
     void run() override
     {
         system("cls");
-        int choice;
+        int choices;
         cout << "=====================================" << endl;
         cout << "E-MONEY SERVICES" << endl;
         cout << "=====================================" << endl;
@@ -749,12 +1310,13 @@ public:
         cout << "3) GCash" << endl;
         cout << "4) Paymaya" << endl;
         cout << "5) Beep" << endl;
+        cout << "0) Back" << endl;
         cout << "Enter choice: ";
-        cin >> choice;
+        cin >> choices;
 
         EMoney emoney(0, 0.00);
 
-        switch (choice)
+        switch (choices)
         {
         case 1:
             emoney.grab();
@@ -771,6 +1333,9 @@ public:
         case 5:
             emoney.beep();
             break;
+        case 0:
+            system("cls");
+            return;
         default:
             cout << "Invalid choice, please try again." << endl;
             break;
@@ -798,6 +1363,7 @@ public:
         cout << "3. Load" << endl;
         cout << "4. E-Pins" << endl;
         cout << "5. E-Money" << endl;
+        cout << "0. Exit" << endl;
         cout << "Enter choice: ";
         cin >> choice;
 
@@ -807,34 +1373,44 @@ public:
         {
             Rewards reward(0, 0, 0);
             reward.run();
+            displayMenu();
             break;
         }
         case 2:
         {
             BillsPayment bills;
             bills.run();
+            displayMenu();
             break;
         }
         case 3:
         {
             Load load(0, 0.00);
             load.run();
+            displayMenu();
             break;
         }
         case 4:
         {
-            EPins epins("", 0);
+            EPins epins(0, 0);
             epins.run();
+            displayMenu();
             break;
         }
         case 5:
         {
             EMoney emoney(0, 0.00);
             emoney.run();
+            displayMenu();
             break;
         }
+        case 0:
+            system("cls");
+            break;
         default:
             cout << "Invalid choice.\n";
+            system("pause");
+            displayMenu();
         }
     }
 };
