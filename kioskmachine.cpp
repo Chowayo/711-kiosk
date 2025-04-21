@@ -13,10 +13,10 @@ public:
     double fee;
     int receipt_number;
     string date_time;
-    Receipt(const string service_type, double amt, double fee)
+    Receipt(const string service_type, double amount, double fee)
     {
         this->service_type = service_type;
-        this->amount = amt;
+        this->amount = amount;
         this->fee = fee;
 
         srand(time(0));
