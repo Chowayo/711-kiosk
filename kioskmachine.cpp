@@ -218,49 +218,46 @@ public:
     {
         system("cls");
         int choices;
-        do
+        cout << "=====================================" << endl;
+        cout << "REWARDS LIST" << endl;
+        cout << "=====================================" << endl;
+        cout << "1) Crunch Time 1pc Fried Chicken - 178 points" << endl;
+        cout << "2) Crunch Time 2pc Fried Chicken - 350 points" << endl;
+        cout << "3) Hershey's Dark Chocolate 40g, 50% off - 31 points" << endl;
+        cout << "4) Kisses Classic Milk Choco 36g, 50% OFF - 35 points" << endl;
+        cout << "5) Hershey's Kisses Cookies N Creme 36g, 50% OFF - 35 points" << endl;
+        cout << "6) Siopao Spicy Asado - 90 points" << endl;
+        cout << "0) Back" << endl;
+
+        cout << "Please enter the number of the item you want to redeem: ";
+        cin >> choices;
+
+        switch (choices)
         {
-            cout << "=====================================" << endl;
-            cout << "REWARDS LIST" << endl;
-            cout << "=====================================" << endl;
-            cout << "1) Crunch Time 1pc Fried Chicken - 178 points" << endl;
-            cout << "2) Crunch Time 2pc Fried Chicken - 350 points" << endl;
-            cout << "3) Hershey's Dark Chocolate 40g, 50% off - 31 points" << endl;
-            cout << "4) Kisses Classic Milk Choco 36g, 50% OFF - 35 points" << endl;
-            cout << "5) Hershey's Kisses Cookies N Creme 36g, 50% OFF - 35 points" << endl;
-            cout << "6) Siopao Spicy Asado - 90 points" << endl;
-            cout << "0) Back" << endl;
-
-            cout << "Please enter the number of the item you want to redeem: ";
-            cin >> choices;
-
-            switch (choices)
-            {
-            case 1:
-                redeem_reward("Crunch Time 1pc Fried Chicken");
-                break;
-            case 2:
-                redeem_reward("Crunch Time 2pc Fried Chicken");
-                break;
-            case 3:
-                redeem_reward("Hershey's Dark Chocolate");
-                break;
-            case 4:
-                redeem_reward("Kisses Classic Milk Choco");
-                break;
-            case 5:
-                redeem_reward("Hershey's Kisses Cookies N Creme");
-                break;
-            case 6:
-                redeem_reward("Siopao Spicy Asado");
-                break;
-            case 0:
-                system("cls");
-                return;
-            default:
-                break;
-            }
-        } while (choices != 0);
+        case 1:
+            redeem_reward("Crunch Time 1pc Fried Chicken");
+            break;
+        case 2:
+            redeem_reward("Crunch Time 2pc Fried Chicken");
+            break;
+        case 3:
+            redeem_reward("Hershey's Dark Chocolate");
+            break;
+        case 4:
+            redeem_reward("Kisses Classic Milk Choco");
+            break;
+        case 5:
+            redeem_reward("Hershey's Kisses Cookies N Creme");
+            break;
+        case 6:
+            redeem_reward("Siopao Spicy Asado");
+            break;
+        case 0:
+            system("cls");
+            return;
+        default:
+            break;
+        }
 
         Receipt receipt("Redeem Reward", 0.00, 0.00);
         receipt.display();
@@ -394,7 +391,7 @@ public:
         {
             this->service_type = "Meralco";
             billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
+            AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
             receipt.display();
             break;
         }
@@ -402,7 +399,7 @@ public:
         {
             this->service_type = "IDK";
             billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
+            AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
             receipt.display();
             break;
         }
@@ -447,7 +444,7 @@ public:
         {
             this->service_type = "PLDT";
             billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
+            AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
             receipt.display();
             break;
         }
@@ -455,7 +452,7 @@ public:
         {
             this->service_type = "Globe";
             billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
+            AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
             receipt.display();
             break;
         }
@@ -500,7 +497,7 @@ public:
         {
             this->service_type = "Globe";
             billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
+            AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
             receipt.display();
             break;
         }
@@ -508,7 +505,7 @@ public:
         {
             this->service_type = "Smart";
             billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
+            AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
             receipt.display();
             break;
         }
@@ -553,7 +550,7 @@ public:
         {
             this->service_type = "Sky Cable";
             billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
+            AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
             receipt.display();
             break;
         }
@@ -561,7 +558,7 @@ public:
         {
             this->service_type = "Cignal";
             billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
+            AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
             receipt.display();
             break;
         }
@@ -607,7 +604,7 @@ public:
         {
             this->service_type = "PLDT";
             billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
+            AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
             receipt.display();
             break;
         }
@@ -615,7 +612,7 @@ public:
         {
             this->service_type = "Converge";
             billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
+            AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
             receipt.display();
             break;
         }
