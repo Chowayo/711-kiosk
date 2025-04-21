@@ -36,7 +36,7 @@ public:
         cout << "Service: " << this->service_type << endl;
         cout << "Amount: " << this->amount << endl;
         cout << "Convenience Fee: " << fee << endl;
-        cout << "Total Amount: " << (this->amount - this->fee) << endl;
+        cout << "Total Amount: " << (this->amount + this->fee) << endl;
         cout << "Receipt Number: " << this->receipt_number << endl;
         cout << "Valid Until: " << date_time << endl;
 
@@ -70,7 +70,7 @@ public:
         cout << "Account Name: " << this->account_name << endl;
         cout << "Amount: " << this->amount << endl;
         cout << "Convenience Fee: " << fee << endl;
-        cout << "Total Amount: " << (this->amount - this->fee) << endl;
+        cout << "Total Amount: " << (this->amount + this->fee) << endl;
         cout << "Receipt Number: " << this->receipt_number << endl;
         cout << "Valid Until: " << date_time << endl;
 
@@ -81,9 +81,8 @@ public:
 
 class MobileReceipt : public Receipt
 {
-    int mobile_number;
-
 public:
+    int mobile_number;
     MobileReceipt(int mobile_number, string service_type, double amount, double fee)
         : Receipt(service_type, amount, fee)
     {
@@ -101,7 +100,32 @@ public:
         cout << "Mobile Number: " << this->mobile_number << endl;
         cout << "Amount: " << this->amount << endl;
         cout << "Convenience Fee: " << fee << endl;
-        cout << "Total Amount: " << (this->amount - this->fee) << endl;
+        cout << "Total Amount: " << (this->amount + this->fee) << endl;
+        cout << "Receipt Number: " << this->receipt_number << endl;
+        cout << "Valid Until: " << date_time << endl;
+
+        system("pause");
+    }
+};
+class EmoneyReceipt : public MobileReceipt
+{
+public:
+    EmoneyReceipt(int mobile_number, string service_type, double amount, double fee)
+        : MobileReceipt(mobile_number, service_type, amount, fee) {}
+
+    void display() override
+    {
+        system("cls");
+        cout << "=====================================" << endl;
+        cout << "RECEIPT" << endl;
+        cout << "=====================================" << endl;
+        cout << "Please bring the slip to the cashier for payment" << endl;
+        cout << "Service: " << this->service_type << endl;
+        cout << "Mobile Number: " << this->mobile_number << endl;
+        cout << "Amount: " << this->amount << endl;
+        cout << "Convenience Fee: " << (this->amount * this->fee) << endl;
+        cout << "Total Amount: " << this->amount << endl;
+        cout << "Total Loaded: " << this->amount - (this->amount * this->fee) << endl;
         cout << "Receipt Number: " << this->receipt_number << endl;
         cout << "Valid Until: " << date_time << endl;
 
@@ -129,40 +153,38 @@ public:
     void run() override
     {
         int choices;
-        do
-        {
-            system("cls");
-            cout << "CLiQQ REWARDS MENU\n";
-            cout << "1) Activate" << endl;
-            cout << "2) Check Balance" << endl;
-            cout << "3) Redeem" << endl;
-            cout << "4) Print Barcode" << endl;
-            cout << "0) Back" << endl;
-            cout << "Enter choice: ";
-            cin >> choices;
+        system("cls");
+        cout << "CLiQQ REWARDS MENU\n";
+        cout << "1) Activate" << endl;
+        cout << "2) Check Balance" << endl;
+        cout << "3) Redeem" << endl;
+        cout << "4) Print Barcode" << endl;
+        cout << "0) Back" << endl;
+        cout << "Enter choice: ";
+        cin >> choices;
 
-            switch (choices)
-            {
-            case 1:
-                activate();
-                break;
-            case 2:
-                checkBalance();
-                break;
-            case 3:
-                redeem();
-                break;
-            case 4:
-                printBarcode();
-                break;
-            case 0:
-                system("cls");
-                return;
-            default:
-                cout << "Invalid choice.\n";
-                break;
-            }
-        } while (choices != 0);
+        switch (choices)
+        {
+        case 1:
+            activate();
+            cout << "rawr";
+            break;
+        case 2:
+            checkBalance();
+            break;
+        case 3:
+            redeem();
+            break;
+        case 4:
+            printBarcode();
+            break;
+        case 0:
+            system("cls");
+            return;
+        default:
+            cout << "Invalid choice.\n";
+            break;
+        }
     }
     void activate()
     {
@@ -174,8 +196,9 @@ public:
         cout << "Card Number: ";
         cin >> this->card_number;
 
-        Receipt receipt("Rewards Activation", 0.00, 0.00);
-        receipt.display();
+        cout << endl
+             << "CODE ACTIVATED" << endl;
+        system("pause");
     }
     void checkBalance()
     {
@@ -187,8 +210,9 @@ public:
         cout << "Mobile Number: ";
         cin >> this->mobile_number;
 
-        Receipt receipt("Check Balance", 0.00, 0.00);
-        receipt.display();
+        cout << endl
+             << "You have 1000 points" << endl;
+        system("pause");
     }
     void redeem()
     {
@@ -213,28 +237,27 @@ public:
             switch (choices)
             {
             case 1:
-                redeem_reward();
+                redeem_reward("Crunch Time 1pc Fried Chicken");
                 break;
             case 2:
-                redeem_reward();
+                redeem_reward("Crunch Time 2pc Fried Chicken");
                 break;
             case 3:
-                redeem_reward();
+                redeem_reward("Hershey's Dark Chocolate");
                 break;
             case 4:
-                redeem_reward();
+                redeem_reward("Kisses Classic Milk Choco");
                 break;
             case 5:
-                redeem_reward();
+                redeem_reward("Hershey's Kisses Cookies N Creme");
                 break;
             case 6:
-                redeem_reward();
+                redeem_reward("Siopao Spicy Asado");
                 break;
             case 0:
                 system("cls");
                 return;
             default:
-                redeem_reward();
                 break;
             }
         } while (choices != 0);
@@ -242,7 +265,7 @@ public:
         Receipt receipt("Redeem Reward", 0.00, 0.00);
         receipt.display();
     }
-    void redeem_reward()
+    void redeem_reward(string reward_name)
     {
         system("cls");
         cout << "=====================================" << endl;
@@ -254,7 +277,7 @@ public:
         cout << "PIN: ";
         cin >> this->pin;
 
-        Receipt receipt("Redeem Reward", 0.00, 0.00);
+        Receipt receipt(reward_name, 0.00, 0.00);
         receipt.display();
     }
     void printBarcode()
@@ -266,8 +289,10 @@ public:
         cout << "Please Enter your mobile number" << endl;
         cin >> this->mobile_number;
 
-        Receipt receipt("Print Barcode", 0.00, 0.00);
-        receipt.display();
+        cout << "=====================================" << endl;
+        cout << "BARCODE" << endl;
+        cout << "=====================================" << endl;
+        system("pause");
     }
 };
 
@@ -278,12 +303,15 @@ public:
     int account_number;
     string account_name;
     double amount;
+    double fee;
 
-    UtilityWater(string service_type, int account_number, string account_name, double amount)
+    UtilityWater(string service_type, int account_number, string account_name, double amount, double fee = 0)
     {
+        this->service_type = service_type;
         this->account_number = account_number;
         this->account_name = account_name;
         this->amount = amount;
+        this->fee = fee;
     }
     void billsDisplay()
     {
@@ -298,13 +326,14 @@ public:
         cout << "Enter choice: ";
         cin >> choices;
 
+        this->fee = 15.00;
         switch (choices)
         {
         case 1:
         {
             this->service_type = "Maynilad";
             billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
+            AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
             receipt.display();
             break;
         }
@@ -343,8 +372,8 @@ public:
 class UtilityPower : public UtilityWater
 {
 public:
-    UtilityPower(string service_type, int account_number, string account_name, double amount)
-        : UtilityWater(service_type, account_number, account_name, amount) {}
+    UtilityPower(string service_type, int account_number, string account_name, double amount, double fee)
+        : UtilityWater(service_type, account_number, account_name, amount, fee) {}
     void billsDisplay()
     {
         system("cls");
@@ -358,6 +387,7 @@ public:
         cout << "Enter choice: ";
         cin >> choices;
 
+        this->fee = 15.00;
         switch (choices)
         {
         case 1:
@@ -395,8 +425,8 @@ public:
 class Telephone : public UtilityWater
 {
 public:
-    Telephone(string service_type, int account_number, string account_name, double amount)
-        : UtilityWater(service_type, account_number, account_name, amount) {}
+    Telephone(string service_type, int account_number, string account_name, double amount, double fee)
+        : UtilityWater(service_type, account_number, account_name, amount, fee) {}
     void billsDisplay()
     {
         system("cls");
@@ -410,6 +440,7 @@ public:
         cout << "Enter choice: ";
         cin >> choices;
 
+        this->fee = 15.00;
         switch (choices)
         {
         case 1:
@@ -447,8 +478,8 @@ public:
 class CellularPhone : public UtilityWater
 {
 public:
-    CellularPhone(string service_type, int account_number, string account_name, double amount)
-        : UtilityWater(service_type, account_number, account_name, amount) {}
+    CellularPhone(string service_type, int account_number, string account_name, double amount, double fee)
+        : UtilityWater(service_type, account_number, account_name, amount, fee) {}
     void billsDisplay()
     {
         system("cls");
@@ -462,6 +493,7 @@ public:
         cout << "Enter choice: ";
         cin >> choices;
 
+        this->fee = 15.00;
         switch (choices)
         {
         case 1:
@@ -499,8 +531,8 @@ public:
 class CableTV : public UtilityWater
 {
 public:
-    CableTV(string service_type, int account_number, string account_name, double amount)
-        : UtilityWater(service_type, account_number, account_name, amount) {}
+    CableTV(string service_type, int account_number, string account_name, double amount, double fee)
+        : UtilityWater(service_type, account_number, account_name, amount, fee) {}
     void billsDisplay()
     {
         system("cls");
@@ -514,6 +546,7 @@ public:
         cout << "Enter choice: ";
         cin >> choices;
 
+        this->fee = 15.00;
         switch (choices)
         {
         case 1:
@@ -552,8 +585,8 @@ public:
 class Internet : public UtilityWater
 {
 public:
-    Internet(string service_type, int account_number, string account_name, double amount)
-        : UtilityWater(service_type, account_number, account_name, amount) {}
+    Internet(string service_type, int account_number, string account_name, double amount, double fee)
+        : UtilityWater(service_type, account_number, account_name, amount, fee) {}
     void billsDisplay()
     {
         system("cls");
@@ -567,6 +600,7 @@ public:
         cout << "Enter choice: ";
         cin >> choices;
 
+        this->fee = 15.00;
         switch (choices)
         {
         case 1:
@@ -608,12 +642,12 @@ public:
     {
         system("cls");
         int choices;
-        UtilityWater water("", 0, "", 0.00);
-        UtilityPower power("", 0, "", 0.00);
-        Telephone telephone("", 0, "", 0.00);
-        CellularPhone phone("", 0, "", 0.00);
-        CableTV cable("", 0, "", 0.00);
-        Internet internet("", 0, "", 0.00);
+        UtilityWater water("", 0, "", 0.00, 0.00);
+        UtilityPower power("", 0, "", 0.00, 0.00);
+        Telephone telephone("", 0, "", 0.00, 0.00);
+        CellularPhone phone("", 0, "", 0.00, 0.00);
+        CableTV cable("", 0, "", 0.00, 0.00);
+        Internet internet("", 0, "", 0.00, 0.00);
 
         cout << "=====================================" << endl;
         cout << "Bills Services" << endl;
@@ -677,45 +711,47 @@ class Load : public Service
 public:
     int mobile_number;
     double amount;
+    double fee;
 
-    Load(int mobile_number, double amount)
+    Load(int mobile_number, double amount, double fee)
     {
         this->mobile_number = mobile_number;
         this->amount = amount;
+        this->fee = 5.00;
     }
     void globe()
     {
         pay();
 
-        MobileReceipt receipt(this->mobile_number, "GLOBE LOAD", 0.00, 0.00);
+        MobileReceipt receipt(this->mobile_number, "GLOBE LOAD", this->amount, this->fee);
         receipt.display();
     }
     void sun()
     {
         pay();
 
-        MobileReceipt receipt(this->mobile_number, "SUN LOAD", 0.00, 0.00);
+        MobileReceipt receipt(this->mobile_number, "SUN LOAD", this->amount, this->fee);
         receipt.display();
     }
     void smart()
     {
         pay();
 
-        MobileReceipt receipt(this->mobile_number, "SMART LOAD", 0.00, 0.00);
+        MobileReceipt receipt(this->mobile_number, "SMART LOAD", this->amount, this->fee);
         receipt.display();
     }
     void tnt()
     {
         pay();
 
-        MobileReceipt receipt(this->mobile_number, "TNT LOAD", 0.00, 0.00);
+        MobileReceipt receipt(this->mobile_number, "TNT LOAD", this->amount, this->fee);
         receipt.display();
     }
     void dito()
     {
         pay();
 
-        MobileReceipt receipt(this->mobile_number, "DITO LOAD", 0.00, 0.00);
+        MobileReceipt receipt(this->mobile_number, "DITO LOAD", this->amount, this->fee);
         receipt.display();
     }
     void pay()
@@ -746,7 +782,7 @@ public:
         cout << "Enter choice: ";
         cin >> choice;
 
-        Load load(0, 0.00);
+        Load load(0, 0.00, 0.00);
 
         switch (choice)
         {
@@ -779,11 +815,13 @@ class EPins : public Service
 public:
     int mobile_number;
     double amount;
+    double fee;
 
-    EPins(int mobile_number, double amount)
+    EPins(int mobile_number, double amount, double fee)
     {
         this->mobile_number = mobile_number;
         this->amount = amount;
+        this->fee = 10.00;
     }
 
     void globe()
@@ -809,7 +847,7 @@ public:
         {
             pay();
 
-            MobileReceipt famsurf50(this->mobile_number, "FAMSURF 50", 50, 0.00);
+            MobileReceipt famsurf50(this->mobile_number, "FAMSURF 50", 50, this->fee);
             famsurf50.display();
 
             break;
@@ -818,7 +856,7 @@ public:
         {
             pay();
 
-            MobileReceipt gosurf99(this->mobile_number, "GOSURF 99", 99, 0.00);
+            MobileReceipt gosurf99(this->mobile_number, "GOSURF 99", 99, this->fee);
             gosurf99.display();
             break;
         }
@@ -826,7 +864,7 @@ public:
         {
             pay();
 
-            MobileReceipt gosurf299(this->mobile_number, "GOSURF 299", 299, 0.00);
+            MobileReceipt gosurf299(this->mobile_number, "GOSURF 299", 299, this->fee);
             gosurf299.display();
             break;
         }
@@ -834,7 +872,7 @@ public:
         {
             pay();
 
-            MobileReceipt gosurf599(this->mobile_number, "GOSURF 599", 599, 0.00);
+            MobileReceipt gosurf599(this->mobile_number, "GOSURF 599", 599, this->fee);
             gosurf599.display();
             break;
         }
@@ -842,7 +880,7 @@ public:
         {
             pay();
 
-            MobileReceipt gosurf999(this->mobile_number, "GOSURF 999", 999, 0.00);
+            MobileReceipt gosurf999(this->mobile_number, "GOSURF 999", 999, this->fee);
             gosurf999.display();
             break;
         }
@@ -883,7 +921,7 @@ public:
         {
             pay();
 
-            MobileReceipt giga50(this->mobile_number, "GIGA 50", 50, 0.00);
+            MobileReceipt giga50(this->mobile_number, "GIGA 50", 50, this->fee);
             giga50.display();
 
             break;
@@ -892,7 +930,7 @@ public:
         {
             pay();
 
-            MobileReceipt allnet50(this->mobile_number, "ALL NET 50", 99, 0.00);
+            MobileReceipt allnet50(this->mobile_number, "ALL NET 50", 99, this->fee);
             allnet50.display();
             break;
         }
@@ -900,7 +938,7 @@ public:
         {
             pay();
 
-            MobileReceipt giga99(this->mobile_number, "GIGA 99", 299, 0.00);
+            MobileReceipt giga99(this->mobile_number, "GIGA 99", 299, this->fee);
             giga99.display();
             break;
         }
@@ -908,7 +946,7 @@ public:
         {
             pay();
 
-            MobileReceipt giga299(this->mobile_number, "GIGA 299", 599, 0.00);
+            MobileReceipt giga299(this->mobile_number, "GIGA 299", 599, this->fee);
             giga299.display();
             break;
         }
@@ -916,7 +954,7 @@ public:
         {
             pay();
 
-            MobileReceipt giga499(this->mobile_number, "GIGA 499", 999, 0.00);
+            MobileReceipt giga499(this->mobile_number, "GIGA 499", 999, this->fee);
             giga499.display();
             break;
         }
@@ -958,7 +996,7 @@ public:
         {
             pay();
 
-            MobileReceipt garena50(this->mobile_number, "Garena 50", 50, 0.00);
+            MobileReceipt garena50(this->mobile_number, "Garena 50", 50, this->fee);
             garena50.display();
 
             break;
@@ -967,7 +1005,7 @@ public:
         {
             pay();
 
-            MobileReceipt garena100(this->mobile_number, "Garena 100", 100, 0.00);
+            MobileReceipt garena100(this->mobile_number, "Garena 100", 100, this->fee);
             garena100.display();
             break;
         }
@@ -975,7 +1013,7 @@ public:
         {
             pay();
 
-            MobileReceipt garena200(this->mobile_number, "Garena 200", 299, 0.00);
+            MobileReceipt garena200(this->mobile_number, "Garena 200", 299, this->fee);
             garena200.display();
             break;
         }
@@ -983,7 +1021,7 @@ public:
         {
             pay();
 
-            MobileReceipt garena300(this->mobile_number, "Garena 300", 599, 0.00);
+            MobileReceipt garena300(this->mobile_number, "Garena 300", 599, this->fee);
             garena300.display();
             break;
         }
@@ -991,7 +1029,7 @@ public:
         {
             pay();
 
-            MobileReceipt garena500(this->mobile_number, "Garena 500", 999, 0.00);
+            MobileReceipt garena500(this->mobile_number, "Garena 500", 999, this->fee);
             garena500.display();
             break;
         }
@@ -1032,7 +1070,7 @@ public:
         {
             pay();
 
-            MobileReceipt gc50(this->mobile_number, "Gameclub 50", 50, 0.00);
+            MobileReceipt gc50(this->mobile_number, "Gameclub 50", 50, this->fee);
             gc50.display();
 
             break;
@@ -1041,7 +1079,7 @@ public:
         {
             pay();
 
-            MobileReceipt gc100(this->mobile_number, "Gameclub 100", 100, 0.00);
+            MobileReceipt gc100(this->mobile_number, "Gameclub 100", 100, this->fee);
             gc100.display();
             break;
         }
@@ -1049,7 +1087,7 @@ public:
         {
             pay();
 
-            MobileReceipt gc200(this->mobile_number, "Gameclub 200", 200, 0.00);
+            MobileReceipt gc200(this->mobile_number, "Gameclub 200", 200, this->fee);
             gc200.display();
             break;
         }
@@ -1057,7 +1095,7 @@ public:
         {
             pay();
 
-            MobileReceipt gc300(this->mobile_number, "Gameclub 300", 300, 0.00);
+            MobileReceipt gc300(this->mobile_number, "Gameclub 300", 300, this->fee);
             gc300.display();
             break;
         }
@@ -1065,7 +1103,7 @@ public:
         {
             pay();
 
-            MobileReceipt gc500(this->mobile_number, "Gameclub 500", 500, 0.00);
+            MobileReceipt gc500(this->mobile_number, "Gameclub 500", 500, this->fee);
             gc500.display();
             break;
         }
@@ -1106,7 +1144,7 @@ public:
         {
             pay();
 
-            MobileReceipt steam60(this->mobile_number, "STEAM 60", 60, 0.00);
+            MobileReceipt steam60(this->mobile_number, "STEAM 60", 60, this->fee);
             steam60.display();
 
             break;
@@ -1115,7 +1153,7 @@ public:
         {
             pay();
 
-            MobileReceipt steam120(this->mobile_number, "STEAM 120", 120, 0.00);
+            MobileReceipt steam120(this->mobile_number, "STEAM 120", 120, this->fee);
             steam120.display();
             break;
         }
@@ -1123,7 +1161,7 @@ public:
         {
             pay();
 
-            MobileReceipt steam299(this->mobile_number, "STEAM 299", 299, 0.00);
+            MobileReceipt steam299(this->mobile_number, "STEAM 299", 299, this->fee);
             steam299.display();
             break;
         }
@@ -1131,7 +1169,7 @@ public:
         {
             pay();
 
-            MobileReceipt steam599(this->mobile_number, "STEAM 599", 599, 0.00);
+            MobileReceipt steam599(this->mobile_number, "STEAM 599", 599, this->fee);
             steam599.display();
             break;
         }
@@ -1139,7 +1177,7 @@ public:
         {
             pay();
 
-            MobileReceipt steam960(this->mobile_number, "STEAM 960", 960, 0.00);
+            MobileReceipt steam960(this->mobile_number, "STEAM 960", 960, this->fee);
             steam960.display();
             break;
         }
@@ -1184,7 +1222,7 @@ public:
         cout << "Enter choice: ";
         cin >> choices;
 
-        EPins epins(0, 0.00);
+        EPins epins(0, 0.00, 0.00);
 
         switch (choices)
         {
@@ -1217,10 +1255,11 @@ public:
 class EMoney : public Load
 {
 public:
-    EMoney(int mobile_number, double amount) : Load(mobile_number, amount)
+    EMoney(int mobile_number, double amount, double fee) : Load(mobile_number, amount, fee)
     {
         this->mobile_number = mobile_number;
         this->amount = amount;
+        this->fee = 0.01;
     }
     void grab()
     {
@@ -1234,7 +1273,7 @@ public:
         cout << "Amount: ";
         cin >> this->amount;
 
-        MobileReceipt receipt(this->mobile_number, "GRAB EMONEY", this->amount, 0.00);
+        EmoneyReceipt receipt(this->mobile_number, "GRAB EMONEY", this->amount, this->fee);
         receipt.display();
     }
     void lazada()
@@ -1249,7 +1288,7 @@ public:
         cout << "Amount: ";
         cin >> this->amount;
 
-        MobileReceipt receipt(this->mobile_number, "LAZADA EMONEY", this->amount, 0.00);
+        EmoneyReceipt receipt(this->mobile_number, "LAZADA EMONEY", this->amount, this->fee);
         receipt.display();
     }
     void gcash()
@@ -1264,7 +1303,7 @@ public:
         cout << "Amount: ";
         cin >> this->amount;
 
-        MobileReceipt receipt(this->mobile_number, "GCASH EMONEY", this->amount, 0.00);
+        EmoneyReceipt receipt(this->mobile_number, "GCASH EMONEY", this->amount, this->fee);
         receipt.display();
     }
     void paymaya()
@@ -1279,7 +1318,7 @@ public:
         cout << "Amount: ";
         cin >> this->amount;
 
-        MobileReceipt receipt(this->mobile_number, "PAYMAYA EMONEY", this->amount, 0.00);
+        EmoneyReceipt receipt(this->mobile_number, "PAYMAYA EMONEY", this->amount, this->fee);
         receipt.display();
     }
     void beep()
@@ -1294,7 +1333,7 @@ public:
         cout << "Amount: ";
         cin >> this->amount;
 
-        MobileReceipt receipt(this->mobile_number, "BEEP EMONEY", this->amount, 0.00);
+        EmoneyReceipt receipt(this->mobile_number, "BEEP EMONEY", this->amount, this->fee);
         receipt.display();
     }
 
@@ -1314,7 +1353,7 @@ public:
         cout << "Enter choice: ";
         cin >> choices;
 
-        EMoney emoney(0, 0.00);
+        EMoney emoney(0, 0.00, 0.00);
 
         switch (choices)
         {
@@ -1385,21 +1424,21 @@ public:
         }
         case 3:
         {
-            Load load(0, 0.00);
+            Load load(0, 0.00, 0.00);
             load.run();
             displayMenu();
             break;
         }
         case 4:
         {
-            EPins epins(0, 0);
+            EPins epins(0, 0, 0.00);
             epins.run();
             displayMenu();
             break;
         }
         case 5:
         {
-            EMoney emoney(0, 0.00);
+            EMoney emoney(0, 0.00, 0.00);
             emoney.run();
             displayMenu();
             break;
