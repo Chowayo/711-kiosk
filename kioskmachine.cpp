@@ -12,6 +12,7 @@ string getDigitsOnly(string input)
     {
         bool valid = true;
 
+        // Check if all characters are digits
         for (char ch : input)
         {
             if (ch < '0' || ch > '9')
@@ -21,13 +22,18 @@ string getDigitsOnly(string input)
             }
         }
 
-        if (valid)
+        // Check if the length is exactly 11 digits
+        if (valid && input.length() == 11)
         {
-            return input;
+            return input; // Return the valid input if it's exactly 11 digits
         }
-
-        cin.clear();
-        cin >> input;
+        else
+        {
+            // Display an error message if invalid
+            cout << "Invalid input! Please enter exactly 11 digits." << endl;
+            cin.clear();  // Clear the input stream
+            cin >> input; // Prompt user to enter input again
+        }
     }
 }
 
@@ -159,6 +165,7 @@ public:
     virtual ~Service() = default;
 };
 class Rewards : public Service
+
 {
 public:
     int card_number, mobile_number, pin;
@@ -185,9 +192,11 @@ public:
         switch (choices)
         {
         case 1:
+        {
             activate();
             cout << "rawr";
             break;
+        }
         case 2:
             checkBalance();
             break;
@@ -311,7 +320,7 @@ public:
         system("pause");
     }
 };
-class UtilityWater
+class UtilityService
 {
 public:
     string service_type;
@@ -320,55 +329,38 @@ public:
     double amount;
     double fee;
 
-    UtilityWater(string service_type, string account_number, string account_name, double amount, double fee = 0)
-    {
-        this->service_type = service_type;
-        this->account_number = account_number;
-        this->account_name = account_name;
-        this->amount = amount;
-        this->fee = fee;
-    }
-    void billsDisplay()
+    UtilityService(string service_type = "", string account_number = "", string account_name = "", double amount = 0.0, double fee = 0.0)
+        : service_type(service_type), account_number(account_number), account_name(account_name), amount(amount), fee(fee) {}
+
+    virtual ~UtilityService() {}
+
+    void billsDisplay(vector<string> serviceList, string header, double fee = 15.00)
     {
         system("cls");
-        int choices;
-        cout << "=====================================" << endl;
-        cout << "WATER SERVICES" << endl;
-        cout << "=====================================" << endl;
-        cout << "1) Maynilad" << endl;
-        cout << "2) Manila Water" << endl;
-        cout << "0) Back" << endl;
-        cout << "Enter choice: ";
-        cin >> choices;
+        int choice;
+        displayHeader(header);
+        displayMenu(serviceList);
+        cin >> choice;
 
-        this->fee = 15.00;
-        switch (choices)
+        if (choice == 0)
         {
-        case 1:
+            system("cls");
+            return;
+        }
+        else if (choice >= 1 && choice <= serviceList.size())
         {
-            this->service_type = "Maynilad";
+            this->service_type = serviceList[choice - 1];
+            this->fee = fee;
             billsPay();
             AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
             receipt.display();
-            break;
         }
-        case 2:
+        else
         {
-            this->service_type = "Manila Water";
-            billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, 0.00, this->account_number, this->account_name);
-            receipt.display();
-            break;
-        }
-        case 0:
-            system("cls");
-            return;
-        default:
-        {
-            break;
-        }
+            cout << "Invalid choice." << endl;
         }
     }
+
     void billsPay()
     {
         system("cls");
@@ -379,276 +371,65 @@ public:
         cout << "Account Number: ";
         cin >> this->account_number;
         this->account_number = getDigitsOnly(this->account_number);
-        cout << "Subscriber Name(ex.LUZCANTOS): ";
-        cin >> this->account_name;
+        cin.ignore();
+        cout << "Subscriber Name (ex. LUZCANTOS): ";
+        getline(cin, this->account_name);
         cout << "Amount: ";
         cin >> this->amount;
     }
-};
-class UtilityPower : public UtilityWater
-{
-public:
-    UtilityPower(string service_type, string account_number, string account_name, double amount, double fee)
-        : UtilityWater(service_type, account_number, account_name, amount, fee) {}
-    void billsDisplay()
+
+    void displayHeader(const string &header)
     {
-        system("cls");
-        int choices;
         cout << "=====================================" << endl;
-        cout << "POWER SERVICES" << endl;
+        cout << header << endl;
         cout << "=====================================" << endl;
-        cout << "1) Meralco" << endl;
-        cout << "2) IDK" << endl;
+    }
+
+    void displayMenu(const vector<string> &services)
+    {
+        for (int i = 0; i < services.size(); i++)
+        {
+            cout << i + 1 << ") " << services[i] << endl;
+        }
         cout << "0) Back" << endl;
         cout << "Enter choice: ";
-        cin >> choices;
-
-        this->fee = 15.00;
-        switch (choices)
-        {
-        case 1:
-        {
-            this->service_type = "Meralco";
-            billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
-            receipt.display();
-            break;
-        }
-        case 2:
-        {
-            this->service_type = "IDK";
-            billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
-            receipt.display();
-            break;
-        }
-        case 0:
-        {
-            system("cls");
-            return;
-        }
-        default:
-        {
-            break;
-        }
-        }
-    }
-    void pay()
-    {
-        UtilityWater::billsPay();
     }
 };
-class Telephone : public UtilityWater
+
+class UtilityWater : public UtilityService
 {
 public:
-    Telephone(string service_type, string account_number, string account_name, double amount, double fee)
-        : UtilityWater(service_type, account_number, account_name, amount, fee) {}
-    void billsDisplay()
-    {
-        system("cls");
-        int choices;
-        cout << "=====================================" << endl;
-        cout << "TELEPHONE SERVICES" << endl;
-        cout << "=====================================" << endl;
-        cout << "1) PLDT" << endl;
-        cout << "2) Globe" << endl;
-        cout << "0) Back" << endl;
-        cout << "Enter choice: ";
-        cin >> choices;
-
-        this->fee = 15.00;
-        switch (choices)
-        {
-        case 1:
-        {
-            this->service_type = "PLDT";
-            billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
-            receipt.display();
-            break;
-        }
-        case 2:
-        {
-            this->service_type = "Globe";
-            billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
-            receipt.display();
-            break;
-        }
-        case 0:
-        {
-            system("cls");
-            return;
-        }
-        default:
-        {
-            break;
-        }
-        }
-    }
-    void pay()
-    {
-        UtilityWater::billsPay();
-    }
+    UtilityWater() : UtilityService() {}
 };
-class CellularPhone : public UtilityWater
+
+class UtilityPower : public UtilityService
 {
 public:
-    CellularPhone(string service_type, string account_number, string account_name, double amount, double fee)
-        : UtilityWater(service_type, account_number, account_name, amount, fee) {}
-    void billsDisplay()
-    {
-        system("cls");
-        int choices;
-        cout << "=====================================" << endl;
-        cout << "POWER SERVICES" << endl;
-        cout << "=====================================" << endl;
-        cout << "1) Globe" << endl;
-        cout << "2) Smart" << endl;
-        cout << "0) Back" << endl;
-        cout << "Enter choice: ";
-        cin >> choices;
-
-        this->fee = 15.00;
-        switch (choices)
-        {
-        case 1:
-        {
-            this->service_type = "Globe";
-            billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
-            receipt.display();
-            break;
-        }
-        case 2:
-        {
-            this->service_type = "Smart";
-            billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
-            receipt.display();
-            break;
-        }
-        case 0:
-        {
-            system("cls");
-            return;
-        }
-        default:
-        {
-            break;
-        }
-        }
-    }
-    void pay()
-    {
-        UtilityWater::billsPay();
-    }
+    UtilityPower() : UtilityService() {}
 };
-class CableTV : public UtilityWater
+
+class Telephone : public UtilityService
 {
 public:
-    CableTV(string service_type, string account_number, string account_name, double amount, double fee)
-        : UtilityWater(service_type, account_number, account_name, amount, fee) {}
-    void billsDisplay()
-    {
-        system("cls");
-        int choices;
-        cout << "=====================================" << endl;
-        cout << "CABLE TV SERVICES" << endl;
-        cout << "=====================================" << endl;
-        cout << "1) Sky Cable" << endl;
-        cout << "2) Cignal" << endl;
-        cout << "0) Back" << endl;
-        cout << "Enter choice: ";
-        cin >> choices;
-
-        this->fee = 15.00;
-        switch (choices)
-        {
-        case 1:
-        {
-            this->service_type = "Sky Cable";
-            billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
-            receipt.display();
-            break;
-        }
-        case 2:
-        {
-            this->service_type = "Cignal";
-            billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
-            receipt.display();
-            break;
-        }
-        case 0:
-        {
-            system("cls");
-            return;
-        }
-        default:
-        {
-            break;
-        }
-        }
-    }
-    void pay()
-    {
-        UtilityWater::billsPay();
-    }
+    Telephone() : UtilityService() {}
 };
-class Internet : public UtilityWater
+
+class CellularPhone : public UtilityService
 {
 public:
-    Internet(string service_type, string account_number, string account_name, double amount, double fee)
-        : UtilityWater(service_type, account_number, account_name, amount, fee) {}
-    void billsDisplay()
-    {
-        system("cls");
-        int choices;
-        cout << "=====================================" << endl;
-        cout << "INTERNET SERVICES" << endl;
-        cout << "=====================================" << endl;
-        cout << "1) PLDT" << endl;
-        cout << "2) Converge" << endl;
-        cout << "0) Back" << endl;
-        cout << "Enter choice: ";
-        cin >> choices;
+    CellularPhone() : UtilityService() {}
+};
 
-        this->fee = 15.00;
-        switch (choices)
-        {
-        case 1:
-        {
-            this->service_type = "PLDT";
-            billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
-            receipt.display();
-            break;
-        }
-        case 2:
-        {
-            this->service_type = "Converge";
-            billsPay();
-            AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
-            receipt.display();
-            break;
-        }
-        case 0:
-        {
-            system("cls");
-            return;
-        }
-        default:
-        {
-            break;
-        }
-        }
-    }
-    void pay()
-    {
-        UtilityWater::billsPay();
-    }
+class CableTV : public UtilityService
+{
+public:
+    CableTV() : UtilityService() {}
+};
+
+class Internet : public UtilityService
+{
+public:
+    Internet() : UtilityService() {}
 };
 class BillsPayment : public Service
 {
@@ -656,66 +437,72 @@ public:
     void run() override
     {
         system("cls");
-        int choices;
-        UtilityWater water("", "", "", 0.00, 0.00);
-        UtilityPower power("", "", "", 0.00, 0.00);
-        Telephone telephone("", "", "", 0.00, 0.00);
-        CellularPhone phone("", "", "", 0.00, 0.00);
-        CableTV cable("", "", "", 0.00, 0.00);
-        Internet internet("", "", "", 0.00, 0.00);
+        int choice;
+        vector<string> service_types = {
+            "Water Service",
+            "Utility Power",
+            "Telephone Service",
+            "Cellular Phone",
+            "Cable TV",
+            "Internet"};
 
         cout << "=====================================" << endl;
         cout << "Bills Services" << endl;
         cout << "=====================================" << endl;
-        cout << "1)Water Service" << endl;
-        cout << "2)Utility Power" << endl;
-        cout << "3)Telephone Services" << endl;
-        cout << "4)Cellular Phone" << endl;
-        cout << "5)Cable TV" << endl;
-        cout << "6)Internet" << endl;
+        for (int i = 0; i < service_types.size(); i++)
+        {
+            cout << i + 1 << ") " << service_types[i] << endl;
+        }
         cout << "0) Back" << endl;
         cout << "Enter choice: ";
-        cin >> choices;
+        cin >> choice;
 
-        switch (choices)
-        {
-        case 1:
-        {
-            water.billsDisplay();
-            break;
-        }
-        case 2:
-        {
-            power.billsDisplay();
-            break;
-        }
-        case 3:
-        {
-            telephone.billsDisplay();
-            break;
-        }
-        case 4:
-        {
-            phone.billsDisplay();
-            break;
-        }
-        case 5:
-        {
-            cable.billsDisplay();
-            break;
-        }
-        case 6:
-        {
-            internet.billsDisplay();
-            break;
-        }
-        case 0:
+        if (choice == 0)
         {
             system("cls");
             return;
         }
-        default:
 
+        switch (choice)
+        {
+        case 1:
+        {
+            UtilityWater water;
+            water.billsDisplay({"Maynilad", "Manila Water"}, "WATER SERVICES", 15.00);
+            break;
+        }
+        case 2:
+        {
+            UtilityPower power;
+            power.billsDisplay({"Meralco", "BENECO"}, "POWER SERVICES", 15.00);
+            break;
+        }
+        case 3:
+        {
+            Telephone telephone;
+            telephone.billsDisplay({"PLDT", "Globe Landline"}, "TELEPHONE SERVICES", 15.00);
+            break;
+        }
+        case 4:
+        {
+            CellularPhone phone;
+            phone.billsDisplay({"Smart", "Globe"}, "CELLULAR PHONE SERVICES", 15.00);
+            break;
+        }
+        case 5:
+        {
+            CableTV cable;
+            cable.billsDisplay({"Sky Cable", "Cignal"}, "CABLE TV SERVICES", 15.00);
+            break;
+        }
+        case 6:
+        {
+            Internet internet;
+            internet.billsDisplay({"Converge", "PLDT Home"}, "INTERNET SERVICES", 15.00);
+            break;
+        }
+        default:
+            cout << "Invalid choice." << endl;
             break;
         }
     }
@@ -731,16 +518,33 @@ public:
     Load(string mobile_number = "", double amount = 0.0, double fee = 5.0)
         : mobile_number(mobile_number), amount(amount), fee(fee) {}
 
-    void pay()
+    void pay(double fee = 5.0)
     {
+        this->fee = fee;
+
         system("cls");
         cout << "=====================================" << endl;
         cout << "LOAD" << endl;
         cout << "=====================================" << endl;
         cout << "Please enter your information" << endl;
-        cout << "Mobile Number: ";
-        cin >> mobile_number;
-        mobile_number = getDigitsOnly(mobile_number);
+
+        // Mobile number input with validation for 11 digits
+        while (true)
+        {
+            cout << "Mobile Number (11 digits): ";
+            cin >> mobile_number;
+            mobile_number = getDigitsOnly(mobile_number); // Remove non-digit characters
+
+            if (mobile_number.length() == 11)
+            {
+                break; // Exit loop if the mobile number is valid
+            }
+            else
+            {
+                cout << "Invalid input! Please enter exactly 11 digits." << endl;
+            }
+        }
+
         cout << "Amount: ";
         cin >> amount;
     }
