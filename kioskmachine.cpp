@@ -6,37 +6,6 @@
 
 using namespace std;
 
-string getDigitsOnly(string input)
-{
-    while (true)
-    {
-        bool valid = true;
-
-        // Check if all characters are digits
-        for (char ch : input)
-        {
-            if (ch < '0' || ch > '9')
-            {
-                valid = false;
-                break;
-            }
-        }
-
-        // Check if the length is exactly 11 digits
-        if (valid && input.length() == 11)
-        {
-            return input; // Return the valid input if it's exactly 11 digits
-        }
-        else
-        {
-            // Display an error message if invalid
-            cout << "Invalid input! Please enter exactly 11 digits." << endl;
-            cin.clear();  // Clear the input stream
-            cin >> input; // Prompt user to enter input again
-        }
-    }
-}
-
 class Receipt
 {
 public:
@@ -136,6 +105,7 @@ public:
         system("pause");
     }
 };
+
 class EmoneyReceipt : public MobileReceipt
 {
 public:
@@ -158,6 +128,40 @@ public:
     }
 };
 
+void numberLimit(string &number, const string &label = "Number", int requiredLength = 11)
+{
+    bool valid = false;
+
+    // Keep asking for input until it's valid
+    while (!valid)
+    {
+        cout << label << " (" << requiredLength << " digits): ";
+        cin >> number;
+
+        // Check if the number has the correct length
+        if (number.length() == requiredLength)
+        {
+            valid = true;
+            // Check if every character is a digit
+            for (int i = 0; i < number.length(); ++i)
+            {
+                if (!isdigit(number[i]))
+                {
+                    valid = false;
+                    break;
+                }
+            }
+        }
+
+        // If invalid input, prompt again
+        if (!valid)
+        {
+            cout << "Invalid input! Please enter exactly " << requiredLength << " digits." << endl;
+            cin.clear(); // Clear the error flag
+        }
+    }
+}
+
 class Service /// base class for all services
 {
 public:
@@ -168,9 +172,9 @@ class Rewards : public Service
 
 {
 public:
-    int card_number, mobile_number, pin;
+    string card_number, mobile_number, pin;
 
-    Rewards(int card_number, int mobile_number, int pin)
+    Rewards(string card_number = "", string mobile_number = "", string pin = "")
     {
         this->card_number = card_number;
         this->mobile_number = mobile_number;
@@ -221,8 +225,12 @@ public:
         cout << "CARD ACTIVATION" << endl;
         cout << "=====================================" << endl;
         cout << "Please enter your card number" << endl;
-        cout << "Card Number: ";
-        cin >> this->card_number;
+
+        numberLimit(this->card_number, "Card Number", 12);
+
+        cout << endl
+             << "CODE ACTIVATED" << endl;
+        system("pause");
 
         cout << endl
              << "CODE ACTIVATED" << endl;
@@ -234,9 +242,8 @@ public:
         cout << "=====================================" << endl;
         cout << "CHECK BALANCE" << endl;
         cout << "=====================================" << endl;
-        cout << "Please enter the mobile number you used for activation" << endl;
-        cout << "Mobile Number: ";
-        cin >> this->mobile_number;
+        cout << "Please enter the card number you used for activation" << endl;
+        numberLimit(this->card_number, "Card Number", 12);
 
         cout << endl
              << "You have 1000 points" << endl;
@@ -297,8 +304,7 @@ public:
         cout << "REDEEM REWARD" << endl;
         cout << "=====================================" << endl;
         cout << "Please enter your information" << endl;
-        cout << "Mobile Number: ";
-        cin >> this->mobile_number;
+        numberLimit(this->mobile_number, "Mobile Number", 11);
         cout << "PIN: ";
         cin >> this->pin;
 
@@ -311,7 +317,7 @@ public:
         cout << "=====================================" << endl;
         cout << "PRINT BARCODE" << endl;
         cout << "=====================================" << endl;
-        cout << "Please Enter your mobile number" << endl;
+        cout << "Enter your mobile number: ";
         cin >> this->mobile_number;
 
         cout << "=====================================" << endl;
@@ -351,7 +357,7 @@ public:
         {
             this->service_type = serviceList[choice - 1];
             this->fee = fee;
-            billsPay();
+            pay();
             AccountReceipt receipt(this->service_type, this->amount, this->fee, this->account_number, this->account_name);
             receipt.display();
         }
@@ -361,16 +367,14 @@ public:
         }
     }
 
-    void billsPay()
+    void pay()
     {
         system("cls");
         cout << "=====================================" << endl;
         cout << this->service_type << endl;
         cout << "=====================================" << endl;
         cout << "Please enter your information" << endl;
-        cout << "Account Number: ";
-        cin >> this->account_number;
-        this->account_number = getDigitsOnly(this->account_number);
+        numberLimit(this->account_number, "Account Number", 13);
         cin.ignore();
         cout << "Subscriber Name (ex. LUZCANTOS): ";
         getline(cin, this->account_name);
@@ -385,7 +389,7 @@ public:
         cout << "=====================================" << endl;
     }
 
-    void displayMenu(const vector<string> &services)
+    void displayMenu(vector<string> &services)
     {
         for (int i = 0; i < services.size(); i++)
         {
@@ -438,13 +442,7 @@ public:
     {
         system("cls");
         int choice;
-        vector<string> service_types = {
-            "Water Service",
-            "Utility Power",
-            "Telephone Service",
-            "Cellular Phone",
-            "Cable TV",
-            "Internet"};
+        vector<string> service_types = {"Water Service", "Utility Power", "Telephone Service", "Cellular Phone", "Cable TV", "Internet"};
 
         cout << "=====================================" << endl;
         cout << "Bills Services" << endl;
@@ -528,22 +526,7 @@ public:
         cout << "=====================================" << endl;
         cout << "Please enter your information" << endl;
 
-        // Mobile number input with validation for 11 digits
-        while (true)
-        {
-            cout << "Mobile Number (11 digits): ";
-            cin >> mobile_number;
-            mobile_number = getDigitsOnly(mobile_number); // Remove non-digit characters
-
-            if (mobile_number.length() == 11)
-            {
-                break; // Exit loop if the mobile number is valid
-            }
-            else
-            {
-                cout << "Invalid input! Please enter exactly 11 digits." << endl;
-            }
-        }
+        numberLimit(this->mobile_number, "Mobile Number", 11);
 
         cout << "Amount: ";
         cin >> amount;
@@ -627,9 +610,8 @@ public:
         int choice;
         system("cls");
         cout << "=====================================" << endl;
-        cout << "E-PINS" << endl;
+        cout << title << endl;
         cout << "=====================================" << endl;
-        cout << " " << title << " " << endl;
 
         for (int x = 0; x < size; x++)
         {
@@ -702,9 +684,8 @@ public:
         cout << "EPINS" << endl;
         cout << "=====================================" << endl;
         cout << "Please enter your information" << endl;
-        cout << "Mobile Number: ";
-        cin >> mobile_number;
-        mobile_number = getDigitsOnly(mobile_number);
+
+        numberLimit(this->mobile_number, "Mobile Number", 11);
     }
 
     void run() override
@@ -771,22 +752,22 @@ public:
     EMoney(string mobile_number = "", double amount = 0.0, double fee = 0.0)
         : Load(mobile_number, amount, fee) {}
 
-    void transaction(string service_name)
+    void pay(string service_name)
     {
         system("cls");
         cout << "=====================================" << endl;
-        cout << service_name << " EMONEY" << endl;
+        cout << service_name << endl;
         cout << "=====================================" << endl;
         cout << "Please enter your information" << endl;
-        cout << "Mobile Number: ";
-        cin >> mobile_number;
-        mobile_number = getDigitsOnly(mobile_number);
+
+        numberLimit(this->mobile_number, "Mobile Number", 11);
+
         cout << "Amount: ";
         cin >> amount;
 
         fee = 0.01;
 
-        EmoneyReceipt receipt(mobile_number, service_name = " EMONEY", amount, fee);
+        EmoneyReceipt receipt(mobile_number, " EMONEY", amount, fee);
         receipt.display();
     }
 
@@ -818,7 +799,7 @@ public:
 
         if (choices >= 1 && choices <= services.size())
         {
-            transaction(services[choices - 1]);
+            pay(services[choices - 1]);
         }
         else
         {
@@ -827,20 +808,23 @@ public:
     }
 };
 
-class Kiosk
+int main()
 {
-public:
-    string kiosk_services;
+    vector<Service *> services;
+    services.push_back(new Rewards());
+    services.push_back(new BillsPayment());
+    services.push_back(new Load());
+    services.push_back(new EPins());
+    services.push_back(new EMoney());
 
-    Kiosk(const string kiosk_services)
-    {
-        this->kiosk_services = kiosk_services;
-    }
+    int choice;
 
-    void displayMenu()
+    while (true)
     {
         system("cls");
-        int choice;
+        cout << "=====================================" << endl;
+        cout << "    Welcome to 7-11 Kiosk System    " << endl;
+        cout << "=====================================" << endl;
         cout << "Please select a service:" << endl;
         cout << "1. Rewards" << endl;
         cout << "2. Bills Payment" << endl;
@@ -851,59 +835,27 @@ public:
         cout << "Enter choice: ";
         cin >> choice;
 
-        switch (choice)
+        if (choice >= 1 && choice <= services.size())
         {
-        case 1:
-        {
-            Rewards reward(0, 0, 0);
-            reward.run();
-            displayMenu();
-            break;
+            services[choice - 1]->run();
         }
-        case 2:
+        else if (choice == 0)
         {
-            BillsPayment bills;
-            bills.run();
-            displayMenu();
-            break;
-        }
-        case 3:
-        {
-            Load load("", 0.00, 0.00);
-            load.run();
-            displayMenu();
-            break;
-        }
-        case 4:
-        {
-            EPins epins("", 0, 0.00);
-            epins.run();
-            displayMenu();
-            break;
-        }
-        case 5:
-        {
-            EMoney emoney("", 0.00, 0.00);
-            emoney.run();
-            displayMenu();
-            break;
-        }
-        case 0:
             system("cls");
+            cout << "Thank you for using 7-11 Kiosk Services!" << endl;
             break;
-        default:
-            cout << "Invalid choice." << endl;
+        }
+        else
+        {
+            cout << "Invalid choice. Please try again." << endl;
             system("pause");
-            displayMenu();
         }
     }
-};
 
-int main()
-{
-    int userChoice;
-    Kiosk kiosk("CLIQQ Services");
-    kiosk.displayMenu();
+    for (int i = 0; i < services.size(); ++i)
+    {
+        delete services[i];
+    }
 
     return 0;
 }
