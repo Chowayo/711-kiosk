@@ -183,7 +183,7 @@ public:
         {
             int choices;
             system("cls");
-            cout << "CLiQQ REWARDS MENU" << endl;
+            cout << "KioskXpress MENU" << endl;
             cout << "1) Activate" << endl;
             cout << "2) Check Balance" << endl;
             cout << "3) Redeem" << endl;
@@ -413,8 +413,21 @@ public:
         cin.ignore();
         cout << "Subscriber Name (ex. LUZCANTOS): ";
         getline(cin, this->account_name);
-        cout << "Amount: ";
-        cin >> this->amount;
+        do
+        {
+            cout << "Amount: ";
+            cin >> this->amount;
+            if (cin.fail())
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid input. Please enter a valid numeric amount." << endl;
+            }
+            else if (this->amount <= 0)
+            {
+                cout << "Please enter a positive amount greater than zero." << endl;
+            }
+        } while (this->amount <= 0 || cin.fail());
     }
 
     void displayHeader(const string &header)
@@ -577,8 +590,22 @@ public:
 
         numberLimit(this->mobile_number, "Mobile Number", 11);
 
-        cout << "Amount: ";
-        cin >> amount;
+        do
+        {
+            cout << "Amount: ";
+            cin >> this->amount;
+
+            if (cin.fail())
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid input. Please enter a valid numeric amount." << endl;
+            }
+            else if (this->amount <= 0)
+            {
+                cout << "Please enter a positive amount greater than zero." << endl;
+            }
+        } while (this->amount <= 0 || cin.fail());
 
         fee = 5.0;
 
@@ -744,34 +771,29 @@ public:
                 {
                     names = {"FAMSURF 50", "GOSURF 99", "GOSURF 299", "GOSURF 599", "GOSURF 999"};
                     prices = {50, 99, 299, 599, 999};
-                    return;
                 }
                 else if (selected == "Smart")
                 {
                     names = {"GIGA50", "ALLNET50", "GIGA99", "GIGA299", "GIGA499"};
                     prices = {50, 50, 99, 299, 499};
-                    return;
                 }
                 else if (selected == "Garena")
                 {
                     names = {"Garena 50", "Garena 100", "Garena 200", "Garena 300", "Garena 500"};
                     prices = {50, 100, 200, 300, 500};
-                    return;
                 }
                 else if (selected == "Gameclub")
                 {
                     names = {"Gameclub 50", "Gameclub 100", "Gameclub 200", "Gameclub 300", "Gameclub 500"};
                     prices = {50, 100, 200, 300, 500};
-                    return;
                 }
                 else if (selected == "Steam")
                 {
                     names = {"STEAM 60", "STEAM 120", "STEAM 299", "STEAM 599", "STEAM 960"};
                     prices = {60, 120, 299, 599, 960};
-                    return;
                 }
-
                 displayOptions(selected, names, prices);
+                return;
             }
             else
             {
@@ -797,8 +819,21 @@ public:
 
         numberLimit(this->mobile_number, "Mobile Number", 11);
 
-        cout << "Amount: ";
-        cin >> amount;
+        do
+        {
+            cout << "Amount: ";
+            cin >> this->amount;
+            if (cin.fail())
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid input. Please enter a valid numeric amount." << endl;
+            }
+            else if (this->amount <= 0)
+            {
+                cout << "Please enter a positive amount greater than zero." << endl;
+            }
+        } while (this->amount <= 0 || cin.fail());
 
         fee = 0.01;
 
