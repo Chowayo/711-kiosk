@@ -30,9 +30,7 @@ public:
     }
     void header() const
     {
-        cout << "=====================================" << endl;
-        cout << "RECEIPT" << endl;
-        cout << "=====================================" << endl;
+        cout << "========== RECEIPT ==========" << endl;
         cout << "Please bring the slip to the cashier for payment" << endl;
     }
     void footer() const
@@ -182,9 +180,7 @@ public:
         {
             int choices;
             system("cls");
-            cout << "=====================================" << endl;
-            cout << "Rewards Menu" << endl;
-            cout << "=====================================" << endl;
+            cout << "========== Rewards Menu ==========" << endl;
             cout << "1) Card Activation" << endl;
             cout << "2) Check Balance" << endl;
             cout << "3) Redeem Rewards" << endl;
@@ -223,9 +219,7 @@ public:
     void activate()
     {
         system("cls");
-        cout << "=====================================" << endl;
-        cout << "CARD ACTIVATION" << endl;
-        cout << "=====================================" << endl;
+        cout << "========== CARD ACTIVATION ==========" << endl;
         cout << "Please enter your card number" << endl;
 
         numberLimit(this->card_number, "Card Number", 12);
@@ -237,9 +231,7 @@ public:
     void checkBalance()
     {
         system("cls");
-        cout << "=====================================" << endl;
-        cout << "CHECK BALANCE" << endl;
-        cout << "=====================================" << endl;
+        cout << "========== CHECK BALANCE ==========" << endl;
         cout << "Please enter the card number you used for activation" << endl;
         numberLimit(this->card_number, "Card Number", 12);
 
@@ -253,9 +245,7 @@ public:
         {
             system("cls");
             int choices;
-            cout << "=====================================" << endl;
-            cout << "REWARDS LIST" << endl;
-            cout << "=====================================" << endl;
+            cout << "========== REWARDS LIST ==========" << endl;
             cout << "1) Crunch Time 1pc Fried Chicken - 178 points" << endl;
             cout << "2) Crunch Time 2pc Fried Chicken - 350 points" << endl;
             cout << "3) Hershey's Dark Chocolate 40g, 50% off - 31 points" << endl;
@@ -321,9 +311,7 @@ public:
     void redeem_reward(string reward_name)
     {
         system("cls");
-        cout << "=====================================" << endl;
-        cout << "REDEEM REWARD" << endl;
-        cout << "=====================================" << endl;
+        cout << "========== REDEEM REWARD ==========" << endl;
         cout << "Please enter your information" << endl;
         numberLimit(this->card_number, "Card Number", 12);
         numberLimit(this->pin, "Pin", 6);
@@ -387,9 +375,7 @@ public:
     void pay()
     {
         system("cls");
-        cout << "=====================================" << endl;
-        cout << this->service_type << endl;
-        cout << "=====================================" << endl;
+        cout << "========== " << this->service_type << " ==========" << endl;
         cout << "Please enter your information" << endl;
         numberLimit(this->account_number, "Account Number", 13);
         cin.ignore();
@@ -414,9 +400,7 @@ public:
 
     void displayHeader(const string &header)
     {
-        cout << "=====================================" << endl;
-        cout << header << endl;
-        cout << "=====================================" << endl;
+        cout << "========== " << header << " ==========" << endl;
     }
 
     void displayMenu(vector<string> &services)
@@ -482,9 +466,7 @@ public:
             int choice;
             vector<string> service_types = {"Water Service", "Utility Power", "Telephone Service", "Cellular Phone", "Cable TV", "Internet"};
 
-            cout << "=====================================" << endl;
-            cout << "Bills Services" << endl;
-            cout << "=====================================" << endl;
+            cout << "========== Bills Services ==========" << endl;
             for (int i = 0; i < service_types.size(); i++)
             {
                 cout << i + 1 << ") " << service_types[i] << endl;
@@ -577,9 +559,7 @@ public:
     void pay(string &network)
     {
         system("cls");
-        cout << "=====================================" << endl;
-        cout << "LOAD - " << network << endl;
-        cout << "=====================================" << endl;
+        cout << "========== LOAD - " << network << " ==========" << endl;
         cout << "Please enter your information" << endl;
 
         numberLimit(this->mobile_number, "Mobile Number", 11);
@@ -615,9 +595,7 @@ public:
             int choice;
             vector<string> networks = {"Globe", "Smart", "TNT", "Sun", "DITO"};
 
-            cout << "=====================================" << endl;
-            cout << "LOAD SERVICES" << endl;
-            cout << "=====================================" << endl;
+            cout << "========== LOAD SERVICES ==========" << endl;
 
             for (int i = 0; i < networks.size(); ++i)
             {
@@ -666,9 +644,7 @@ public:
     void pay(const string &service_name, const string &item_name, double item_price)
     {
         system("cls");
-        cout << "=====================================" << endl;
-        cout << service_name << " - " << item_name << endl;
-        cout << "=====================================" << endl;
+        cout << "========== " << service_name << " - " << item_name << " ==========" << endl;
         cout << "Please enter your information" << endl;
 
         numberLimit(this->mobile_number, "Mobile Number", 11);
@@ -684,9 +660,7 @@ public:
         {
             int choice;
             system("cls");
-            cout << "=====================================" << endl;
-            cout << "E-PINS - " << service_name << endl;
-            cout << "=====================================" << endl;
+            cout << "========== E-PINS - " << service_name << " ==========" << endl;
 
             for (size_t i = 0; i < names.size(); ++i)
             {
@@ -729,9 +703,7 @@ public:
             int choice;
             vector<string> services = {"Globe", "Smart", "Garena", "Gameclub", "Steam"};
 
-            cout << "=====================================" << endl;
-            cout << "E-PINS SERVICES" << endl;
-            cout << "=====================================" << endl;
+            cout << "========== E-PINS SERVICES ==========" << endl;
 
             for (size_t i = 0; i < services.size(); ++i)
             {
@@ -810,9 +782,7 @@ public:
     void pay(string service_name)
     {
         system("cls");
-        cout << "=====================================" << endl;
-        cout << service_name << endl;
-        cout << "=====================================" << endl;
+        cout << "========== " << service_name << " ==========" << endl;
         cout << "Please enter your information" << endl;
 
         numberLimit(this->mobile_number, "Mobile Number", 11);
@@ -852,9 +822,7 @@ public:
             services.push_back("Paymaya");
             services.push_back("Beep");
 
-            cout << "=====================================" << endl;
-            cout << "E-MONEY SERVICES" << endl;
-            cout << "=====================================" << endl;
+            cout << "========== E-MONEY SERVICES ==========" << endl;
             for (int i = 0; i < services.size(); ++i)
                 cout << i + 1 << ") " << services[i] << endl;
             cout << "0) Back" << endl;
