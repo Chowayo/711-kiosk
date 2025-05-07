@@ -183,10 +183,12 @@ public:
         {
             int choices;
             system("cls");
-            cout << "KioskXpress MENU" << endl;
-            cout << "1) Activate" << endl;
+            cout << "=====================================" << endl;
+            cout << "Rewards Menu" << endl;
+            cout << "=====================================" << endl;
+            cout << "1) Card Activation" << endl;
             cout << "2) Check Balance" << endl;
-            cout << "3) Redeem" << endl;
+            cout << "3) Redeem Rewards" << endl;
             cout << "4) Print Barcode" << endl;
             cout << "0) Back" << endl;
             cout << "Enter choice: ";
@@ -203,16 +205,17 @@ public:
             {
             case 1:
                 activate();
-                return;
+                break;
             case 2:
                 checkBalance();
-                return;
+                break;
             case 3:
-                redeem();
-                return;
+                if (redeem())
+                    return;
+                break;
             case 4:
                 printBarcode();
-                return;
+                break;
             case 0:
                 system("cls");
                 return;
@@ -249,7 +252,7 @@ public:
              << "You have 1000 points" << endl;
         system("pause");
     }
-    void redeem()
+    bool redeem()
     {
         while (true)
         {
@@ -281,37 +284,37 @@ public:
             case 1:
             {
                 redeem_reward("Crunch Time 1pc Fried Chicken");
-                return;
+                return true;
             }
             case 2:
             {
                 redeem_reward("Crunch Time 2pc Fried Chicken");
-                return;
+                return true;
             }
             case 3:
             {
                 redeem_reward("Hershey's Dark Chocolate");
-                return;
+                return true;
             }
             case 4:
             {
                 redeem_reward("Kisses Classic Milk Choco");
-                return;
+                return true;
             }
             case 5:
             {
                 redeem_reward("Hershey's Kisses Cookies N Creme");
-                return;
+                return true;
             }
             case 6:
             {
                 redeem_reward("Siopao Spicy Asado");
-                return;
+                return true;
             }
             case 0:
             {
                 system("cls");
-                return;
+                return false;
             }
             default:
             {
@@ -319,9 +322,6 @@ public:
             }
             }
         }
-
-        Receipt receipt("Redeem Reward", 0.00, 0.00);
-        receipt.display();
     }
     void redeem_reward(string reward_name)
     {
