@@ -169,12 +169,11 @@ class Rewards : public Service
 
 {
 public:
-    string card_number, mobile_number, pin;
+    string card_number, pin;
 
-    Rewards(string card_number = "", string mobile_number = "", string pin = "")
+    Rewards(string card_number = "", string pin = "")
     {
         this->card_number = card_number;
-        this->mobile_number = mobile_number;
         this->pin = pin;
     }
     void run() override
@@ -189,7 +188,6 @@ public:
             cout << "1) Card Activation" << endl;
             cout << "2) Check Balance" << endl;
             cout << "3) Redeem Rewards" << endl;
-            cout << "4) Print Barcode" << endl;
             cout << "0) Back" << endl;
             cout << "Enter choice: ";
             cin >> choices;
@@ -205,16 +203,13 @@ public:
             {
             case 1:
                 activate();
-                break;
+                return;
             case 2:
                 checkBalance();
-                break;
+                return;
             case 3:
                 if (redeem())
                     return;
-                break;
-            case 4:
-                printBarcode();
                 break;
             case 0:
                 system("cls");
@@ -330,24 +325,11 @@ public:
         cout << "REDEEM REWARD" << endl;
         cout << "=====================================" << endl;
         cout << "Please enter your information" << endl;
-        numberLimit(this->mobile_number, "Mobile Number", 11);
+        numberLimit(this->card_number, "Card Number", 12);
         numberLimit(this->pin, "Pin", 6);
 
         Receipt receipt(reward_name, 0.00, 0.00);
         receipt.display();
-    }
-    void printBarcode()
-    {
-        system("cls");
-        cout << "=====================================" << endl;
-        cout << "PRINT BARCODE" << endl;
-        cout << "=====================================" << endl;
-        numberLimit(this->mobile_number, "Mobile Number", 11);
-
-        cout << "=====================================" << endl;
-        cout << "BARCODE" << endl;
-        cout << "=====================================" << endl;
-        system("pause");
     }
 };
 class UtilityService
