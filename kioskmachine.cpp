@@ -523,38 +523,50 @@ public:
             case 1:
             {
                 UtilityWater water;
-                water.billsDisplay({"Maynilad", "Manila Water"}, "WATER SERVICES", 15.00);
-                return;
+                bool success = water.billsDisplay({"Maynilad", "Manila Water"}, "WATER SERVICES", 15.00);
+                if (success)
+                    return;
+                break;
             }
             case 2:
             {
                 UtilityPower power;
-                power.billsDisplay({"Meralco", "BENECO"}, "POWER SERVICES", 15.00);
-                return;
+                bool success = power.billsDisplay({"Meralco", "BENECO"}, "POWER SERVICES", 15.00);
+                if (success)
+                    return;
+                break;
             }
             case 3:
             {
                 Telephone telephone;
-                telephone.billsDisplay({"PLDT", "Globe Landline"}, "TELEPHONE SERVICES", 15.00);
-                return;
+                bool success = telephone.billsDisplay({"PLDT", "Globe Landline"}, "TELEPHONE SERVICES", 15.00);
+                if (success)
+                    return;
+                break;
             }
             case 4:
             {
                 CellularPhone phone;
-                phone.billsDisplay({"Smart", "Globe"}, "CELLULAR PHONE SERVICES", 15.00);
-                return;
+                bool success = phone.billsDisplay({"Smart", "Globe"}, "CELLULAR PHONE SERVICES", 15.00);
+                if (success)
+                    return;
+                break;
             }
             case 5:
             {
                 CableTV cable;
-                cable.billsDisplay({"Sky Cable", "Cignal"}, "CABLE TV SERVICES", 15.00);
-                return;
+                bool success = cable.billsDisplay({"Sky Cable", "Cignal"}, "CABLE TV SERVICES", 15.00);
+                if (success)
+                    return;
+                break;
             }
             case 6:
             {
                 Internet internet;
-                internet.billsDisplay({"Converge", "PLDT Home"}, "INTERNET SERVICES", 15.00);
-                return;
+                bool success = internet.billsDisplay({"Converge", "PLDT Home"}, "INTERNET SERVICES", 15.00);
+                if (success)
+                    return;
+                break;
             }
             case 0:
             {
@@ -792,12 +804,16 @@ public:
                     names = {"STEAM 60", "STEAM 120", "STEAM 299", "STEAM 599", "STEAM 960"};
                     prices = {60, 120, 299, 599, 960};
                 }
-                displayOptions(selected, names, prices);
-                return;
-            }
-            else
-            {
-                continue;
+
+                bool success = displayOptions(selected, names, prices);
+                if (success)
+                {
+                    return;
+                }
+                else
+                {
+                    continue;
+                }
             }
         }
     }
