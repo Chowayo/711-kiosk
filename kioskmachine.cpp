@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <vector>
 #include <limits>
+#include <algorithm>
 
 using namespace std;
 
@@ -168,6 +169,7 @@ class Rewards : public Service
 {
 public:
     string card_number, pin;
+    vector<string> activated_cards;
 
     Rewards(string card_number = "", string pin = "")
     {
@@ -220,19 +222,26 @@ public:
     {
         system("cls");
         cout << "========== CARD ACTIVATION ==========" << endl;
-        cout << "Please enter your card number" << endl;
-
+        cout << "Please enter your card number to activate: " << endl;
         numberLimit(this->card_number, "Card Number", 12);
 
-        cout << endl
-             << "CODE ACTIVATED" << endl;
+        if (find(activated_cards.begin(), activated_cards.end(), this->card_number) != activated_cards.end())
+        {
+            cout << "Card is already activated!" << endl;
+        }
+        else
+        {
+            activated_cards.push_back(this->card_number);
+            cout << "Card Activated" << endl;
+        }
+
         system("pause");
     }
     void checkBalance()
     {
         system("cls");
         cout << "========== CHECK BALANCE ==========" << endl;
-        cout << "Please enter the card number you used for activation" << endl;
+        cout << "Please enter your card number" << endl;
         numberLimit(this->card_number, "Card Number", 12);
 
         cout << endl
