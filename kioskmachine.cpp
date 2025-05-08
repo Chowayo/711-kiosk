@@ -814,7 +814,7 @@ public:
 
         fee = 0.01;
 
-        EmoneyReceipt receipt(mobile_number, " EMONEY", amount, fee);
+        EmoneyReceipt receipt(mobile_number, service_name, amount, fee);
         receipt.display();
     }
 
